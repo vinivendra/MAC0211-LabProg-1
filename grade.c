@@ -18,6 +18,7 @@ float **initGrade(int altura, int largura) {
 
 void criaPrimeiroFrame(float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado) {
     int i = 0;
+    
     for (i = 0; i < altura; i++) {
         primeiraLinha(grade[i], largura, limiteDasMargens, fluxoDesejado);
     }

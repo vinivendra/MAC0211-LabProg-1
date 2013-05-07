@@ -9,12 +9,14 @@
 int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens);
 float velocidadeAleatoriaDaAgua (float velocidadeAnterior);
 void normaliza(float *linha, int largura, int fluxoDesejado);
+int margemEsquerda (float *linha);
+int margemDireita (float *linha, int largura);
 
 
 
 void proximaLinha (float *linhaAnterior, float *linha, int largura, float limiteDasMargens, int fluxoDesejado) {
-    int tamanhoDaMargemEsquerda = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
-    int tamanhoDaMargemDireita = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
+    int tamanhoDaMargemEsquerda = margemEsquerda(linhaAnterior);
+    int tamanhoDaMargemDireita = margemDireita(linhaAnterior, largura);
     
     int i = 0;
     
@@ -38,7 +40,21 @@ int margemEsquerda (float *linha) {
         n++;
     }
     
+    n--;
+    
     return n;
+}
+
+int margemDireita (float *linha, int largura) {
+    int n = largura;
+    
+    while (linha[n] == 0) {
+        n--;
+    }
+    
+    n++;
+    
+    return largura-n;
 }
 
 void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoDesejado) {
