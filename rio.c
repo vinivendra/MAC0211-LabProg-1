@@ -3,13 +3,13 @@
 #include "rio.h"
 
 void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoDesejado);
-int tamanhoAleatorioDaMargem(int largura, float limiteDasMargens);
+int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens);
 float velocidadeAleatoriaDaAgua (float velocidadeAnterior);
 void normaliza(float *linha, int largura, int fluxoDesejado);
 
 void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoDesejado) {
-    int tamanhoDaMargemEsquerda = tamanhoAleatorioDaMargem(largura, limiteDasMargens);
-    int tamanhoDaMargemDireita = tamanhoAleatorioDaMargem(largura, limiteDasMargens);
+    int tamanhoDaMargemEsquerda = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
+    int tamanhoDaMargemDireita = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
     
     int i = 0;
     
@@ -33,7 +33,7 @@ void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoD
     
 }
 
-int tamanhoAleatorioDaMargem(int largura, float limiteDasMargens) {
+int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens) {
     float limiteAleatorio = limiteDasMargens*rand()/RAND_MAX; /* float entre 0 e o limite das margens */
     int resultado = limiteAleatorio*largura;
     if (resultado == 0) resultado++;

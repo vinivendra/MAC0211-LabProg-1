@@ -75,7 +75,8 @@ int main (int argc, char *argv[]) {
     grade = initGrade(alturaDaGrade, larguraDoRio);
     
     criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado);
-        
+    
+    outputArray(grade, alturaDaGrade, larguraDoRio);
     
     return 0;
 }

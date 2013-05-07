@@ -4,11 +4,15 @@
 #include "Output.h"
 
 
-void outputArray (char *array, int n) {
+void outputArray (float **array, int altura, int largura) {
     int i = 0;
+    int j = 0;
     
-    for (i = 0; i < n; i ++) {
-        printf("%c", array[i]);
+    for (i = 0; i < altura; i ++) {
+        for (j = 0; j < largura; j++) {
+            int bla = array[i][j];
+            printf("%d", bla);
+        }
+        printf("\n");
     }
-    printf("\n");
 }
