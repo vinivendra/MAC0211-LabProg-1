@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include "rio.h"
 
-
+void primeiraLinha(int *linha, int largura, float limiteDasMargens, int fluxoDesejado);
+int tamanhoAleatorioDaMargem(int largura, float limiteDasMargens);
+int velocidadeAleatoriaDaAgua (int velocidadeAnterior);
+void normaliza(int *linha, int largura, int fluxoDesejado);
 
 void primeiraLinha(int *linha, int largura, float limiteDasMargens, int fluxoDesejado) {
     int tamamhoDaMargemEsquerda = tamanhoAleatorioDaMargem(largura, limiteDasMargens);
@@ -10,16 +13,22 @@ void primeiraLinha(int *linha, int largura, float limiteDasMargens, int fluxoDes
     
     int i = 0;
     
-    for (i = 0; i < tamamhoDaMargemEsquerda; i++) /* Insere a margem esquerda */
+    for (i = 0; i < tamamhoDaMargemEsquerda; i++) { /* Insere a margem esquerda */
         linha[i] = 0;
+        printf("0");
+    }
     for (i = tamamhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
         linha[i] = velocidadeAleatoriaDaAgua(linha[i-1]);
+        printf("%d", linha[i]);
     }
-    for (i = largura tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
+    for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
         linha[i] = 0;
+        printf("0");
     }
     
     normaliza(linha, largura, fluxoDesejado); /* Normaliza o fluxo da água */
+    
+    printf("\n");
     
 }
 

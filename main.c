@@ -3,7 +3,7 @@
 #include <math.h>
 #include "Output.h"
 #include "grade.h"
-
+#include "rio.h"
 
 #define velocidadeDaAgua 10
 #define alturaDaGrade 10
@@ -39,6 +39,7 @@ int main (int argc, char *argv[]) {
     int **grade;
     
     int i = 0;
+    int j = 0;
     
     char *parametro;
     
@@ -73,6 +74,12 @@ int main (int argc, char *argv[]) {
     }
     
     grade = initGrade(alturaDaGrade, larguraDoRio);
+    
+    for (i = 0; i < alturaDaGrade; i++) {
+        primeiraLinha(grade[i], larguraDoRio, limiteDasMargens, fluxoDesejado);
+        for (j = 0; j < larguraDoRio; j++) {
+        }
+    }
         
     
     return 0;
