@@ -13,9 +13,22 @@ void normaliza(float *linha, int largura, int fluxoDesejado);
 
 
 void proximaLinha (float *linhaAnterior, float *linha, int largura, float limiteDasMargens, int fluxoDesejado) {
+    int tamanhoDaMargemEsquerda = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
+    int tamanhoDaMargemDireita = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
     
+    int i = 0;
     
+    for (i = 0; i < tamanhoDaMargemEsquerda; i++) { /* Insere a margem esquerda */
+        linha[i] = 0;
+    }
+    for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
+        linha[i] = velocidadeAleatoriaDaAgua(linha[i-1]);
+    }
+    for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
+        linha[i] = 0;
+    }
     
+    normaliza(linha, largura, fluxoDesejado); /* Normaliza o fluxo da água */
 }
 
 int margemEsquerda (float *linha) {
