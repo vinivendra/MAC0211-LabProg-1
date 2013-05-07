@@ -10,8 +10,11 @@ void outputArray (float **array, int altura, int largura) {
     
     for (i = 0; i < altura; i ++) {
         for (j = 0; j < largura; j++) {
-            int bla = array[i][j];
-            printf("%d", bla);
+            int aux = array[i][j];
+            if (aux == 0)
+                printf("#", aux);
+            else
+                printf("%d", aux + 1);
         }
         printf("\n");
     }

@@ -5,7 +5,7 @@
 #include "grade.h"
 
 #define velocidadeDaAgua 10
-#define alturaDaGrade 10
+#define alturaDaGrade 20
 #define ProbabilidadeDeObstaculos 0
 #define limiteDasMargens 0.3
 

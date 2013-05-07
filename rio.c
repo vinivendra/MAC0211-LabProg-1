@@ -2,10 +2,15 @@
 #include <stdlib.h>
 #include "rio.h"
 
-void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoDesejado);
+/*
+ Protótipos
+*/
+
 int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens);
 float velocidadeAleatoriaDaAgua (float velocidadeAnterior);
 void normaliza(float *linha, int largura, int fluxoDesejado);
+
+
 
 void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoDesejado) {
     int tamanhoDaMargemEsquerda = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
