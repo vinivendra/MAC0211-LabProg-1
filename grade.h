@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "rio.h"
 
-int **initGrade(int altura, int largura);
+float **initGrade(int altura, int largura);
+void criaPrimeiroFrame(float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado);
