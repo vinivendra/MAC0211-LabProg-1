@@ -8,9 +8,8 @@
 */
 
 int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens);
-float velocidadeAleatoriaDaAgua ();
+float velocidadeAleatoriaDaAgua(int, int, int, int, float);
 void normaliza(float *linha, int largura, int fluxoDesejado);
-static float gaussianNumber();
 int margemEsquerda (float *linha);
 int margemDireita (float *linha, int largura);
 
@@ -24,14 +23,14 @@ void proximaLinha (float *linhaAnterior, float *linha, int largura, float limite
     linha[i] = 0;
   }
   for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
-    linha[i] = velocidadeAleatoriaDaAgua();
+    linha[i] = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
   }
   for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
     linha[i] = 0;
   }
-    
-  normaliza(linha, largura, fluxoDesejado); /* Normaliza o fluxo da água */
-	}
+   normaliza(linha, largura, fluxoDesejado);
+  
+}
 
 int margemEsquerda (float *linha) {
   int n = 0;
@@ -67,14 +66,12 @@ void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoD
     linha[i] = 0;
   }
   for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
-    linha[i] = velocidadeAleatoriaDaAgua(linha[i-1]);
+    linha[i] = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
   }
   for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
     linha[i] = 0;
   }
-    
-  normaliza(linha, largura, fluxoDesejado); /* Normaliza o fluxo da água */
-        
+  normaliza(linha, largura, fluxoDesejado);
 }
 
 int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens) {
@@ -85,22 +82,16 @@ int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens) {
   return resultado;
 }
 
-static float gaussianNumber(){
-  float x, y, s;
-  do{
-    x = 2.0*rand()/RAND_MAX - 1;
-    y = 2*0*rand()/RAND_MAX - 1;
-    s = x*x + y*y;
-  }while( s > 1);
+
+float velocidadeAleatoriaDaAgua (int posicaoLinha, int margemDir, int margemEsq, int largura, float limiteDasMargens) {
+  float vel = 1;
   
-  return  sqrt(-2*log(s) / s);
+  if( abs( largura - posicaoLinha - margemDir ) <= 2 || abs(posicaoLinha - margemEsq) < /*largura*limiteDasMargens*/2 )
+    vel = 1.0*rand()/RAND_MAX;
 
-}
+  else vel = 1.0*rand()/RAND_MAX + 1;
 
-float velocidadeAleatoriaDaAgua () {
-  float i = gaussianNumber(); /* velocidadeAnterior +- 1 */
-  if (i <= 0) i++;
-  return i;
+  return vel;
 }
 
 void normaliza(float *linha, int largura, int fluxoDesejado) {
