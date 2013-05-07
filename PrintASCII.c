@@ -8,7 +8,7 @@ void outputArray (float **array, int altura, int largura) {
     int i = 0;
     int j = 0;
     
-    for (i = 0; i < altura; i ++) {
+    for (i = altura - 1; i >= 0; i --) {
         for (j = 0; j < largura; j++) {
             int aux = array[i][j];
             if (aux == 0)

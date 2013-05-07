@@ -12,6 +12,22 @@ void normaliza(float *linha, int largura, int fluxoDesejado);
 
 
 
+void proximaLinha (float *linhaAnterior, float *linha, int largura, float limiteDasMargens, int fluxoDesejado) {
+    
+    
+    
+}
+
+int margemEsquerda (float *linha) {
+    int n = 0;
+    
+    while (linha[n] == 0) {
+        n++;
+    }
+    
+    return n;
+}
+
 void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoDesejado) {
     int tamanhoDaMargemEsquerda = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
     int tamanhoDaMargemDireita = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
