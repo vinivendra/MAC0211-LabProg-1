@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "rio.h"
 
 /*
@@ -7,8 +8,9 @@
 */
 
 int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens);
-float velocidadeAleatoriaDaAgua (float velocidadeAnterior);
+float velocidadeAleatoriaDaAgua ();
 void normaliza(float *linha, int largura, int fluxoDesejado);
+static float gaussianNumber();
 
 
 
@@ -22,7 +24,7 @@ void proximaLinha (float *linhaAnterior, float *linha, int largura, float limite
         linha[i] = 0;
     }
     for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
-        linha[i] = velocidadeAleatoriaDaAgua(linha[i-1]);
+        linha[i] = velocidadeAleatoriaDaAgua();
     }
     for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
         linha[i] = 0;
@@ -69,10 +71,22 @@ int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens) {
     return resultado;
 }
 
-float velocidadeAleatoriaDaAgua (float velocidadeAnterior) {
-    float i = velocidadeAnterior + 2.0*rand()/RAND_MAX - 1; /* velocidadeAnterior +- 1 */
-    if (i <= 0) i++;
-    return i;
+static float gaussianNumber(){
+  float x, y, s;
+  do{
+    x = 2.0*rand()/RAND_MAX - 1;
+    y = 2*0*rand()/RAND_MAX - 1;
+    s = x*x + y*y;
+  }while( s > 1);
+  
+  return  sqrt(-2*log(s) / s);
+
+}
+
+float velocidadeAleatoriaDaAgua () {
+  float i = gaussianNumber(); /* velocidadeAnterior +- 1 */
+  if (i <= 0) i++;
+  return i;
 }
 
 void normaliza(float *linha, int largura, int fluxoDesejado) {
