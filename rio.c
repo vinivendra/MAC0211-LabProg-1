@@ -15,22 +15,16 @@ void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoD
     
     for (i = 0; i < tamanhoDaMargemEsquerda; i++) { /* Insere a margem esquerda */
         linha[i] = 0;
-        printf("#");
     }
     for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
         linha[i] = velocidadeAleatoriaDaAgua(linha[i-1]);
-        int bla = linha[i];
-        printf("%d", bla + 1);
     }
     for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
         linha[i] = 0;
-        printf("#");
     }
     
     normaliza(linha, largura, fluxoDesejado); /* Normaliza o fluxo da água */
-    
-    printf("\n");
-    
+        
 }
 
 int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens) {
