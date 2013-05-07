@@ -8,5 +8,5 @@
  padrão, seja numa janela separada em cores.
 */
 
-void outputArray (float **array, int altura, int largura);
+void outputArray (float **array, int altura, int largura, int indice);
 void clearScreen();
