@@ -13,7 +13,7 @@ int main (int argc, char *argv[]) {
     
     /*
      Declaração de variáveis
-    */
+     */
     
     int velocidadeDoBarco = 0;
     int larguraDoRio = 0;
@@ -32,16 +32,16 @@ int main (int argc, char *argv[]) {
      Inicialização
      */
     
-    *indice = 0;
+    indice = 0;
     
     /*
      Leitura de parametros
      */
     
-    for (i = 1; i < argc; i ++) { /* Percorre todos os parâmetros passados */
+    for (i = 1; i < argc; i ++) {   /* Percorre todos os parâmetros passados */
         parametro = argv[i];
         
-        if (parametro[1] == 'b') { /* Atribui o valor do parâmetro à variável adequada */
+        if (parametro[1] == 'b') {  /* Atribui o valor do parâmetro à variável adequada */
             velocidadeDoBarco = atoi(&parametro[2]);
         }
         else if (parametro[1] == 'l') {
@@ -84,7 +84,7 @@ int main (int argc, char *argv[]) {
     
     criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado);
     
-    outputArray(grade, alturaDaGrade, larguraDoRio, *indice);
+    outputArray(grade, alturaDaGrade, larguraDoRio, indice);
     
     printf("\n");
     
@@ -97,7 +97,7 @@ int main (int argc, char *argv[]) {
         
         criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice);
         
-        outputArray(grade, alturaDaGrade, larguraDoRio, *indice);
+        outputArray(grade, alturaDaGrade, larguraDoRio, indice);
         printf("\n");
         
         sleep(1);

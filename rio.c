@@ -16,14 +16,14 @@ int margemDireita (float *linha, int largura);
 
 /*
  Implementações
-*/
+ */
 
 void proximaLinha (float *linhaAnterior, float *linha, int largura, float limiteDasMargens, int fluxoDesejado) { /* Calcula como deve ser a nova
-                                                                                                                    linha do frame */
+                                                                                                                  linha do frame */
     int tamanhoDaMargemEsquerda;
     int tamanhoDaMargemDireita;
     int i = 0;
-        
+    
     aleatorizaMargem(linhaAnterior, linha, limiteDasMargens, largura); /* Insere as novas margens aleatorizadas */
     
     tamanhoDaMargemEsquerda = margemEsquerda(linha);
@@ -43,19 +43,19 @@ int margemEsquerda (float *linha) { /* Retorna o tamanho da margem esquerda da l
     while (linha[n] == 0) {
         n++;
     }
-        
+    
     return n;
 }
 
 int margemDireita (float *linha, int largura) { /* Retorna o tamanho da margem direita da linha de tamanho 'largura' */
     int n = largura-1;
-        
+    
     while (linha[n] == 0) {
         n--;
     }
     
     n++;
-        
+    
     return largura-n;
 }
 
@@ -110,13 +110,13 @@ void normaliza(float *linha, int largura, int fluxoDesejado) { /* Normaliza a li
 }
 
 void aleatorizaMargem(float *linhaAnterior, float *linha, float limiteDasMargens, int largura){ /* Calcula o novo tamanho das margens, baseado
-                                                                                                    na linha anterior */
+                                                                                                 na linha anterior */
     int tamanhoDaMargemEsquerda = margemEsquerda(linhaAnterior);
     int tamanhoDaMargemDireita = margemDireita(linhaAnterior, largura);
     int variacaoEsquerda = (rand()%3) - 1; /* O tamanho da margem nova vai variar da antiga de -1, 0 ou 1 */
     int variacaoDireita = (rand()%3) - 1;
     int i;
-            
+    
     tamanhoDaMargemEsquerda = tamanhoDaMargemEsquerda + variacaoEsquerda;
     tamanhoDaMargemDireita = tamanhoDaMargemDireita + variacaoDireita;
     
@@ -124,7 +124,7 @@ void aleatorizaMargem(float *linhaAnterior, float *linha, float limiteDasMargens
     else if (tamanhoDaMargemEsquerda > limiteDasMargens * largura) tamanhoDaMargemEsquerda = limiteDasMargens * largura;
     if (tamanhoDaMargemDireita <= 0) tamanhoDaMargemDireita = 1;
     else if (tamanhoDaMargemDireita > limiteDasMargens * largura) tamanhoDaMargemDireita = limiteDasMargens * largura;
-        
+    
     for (i = 0; i < tamanhoDaMargemEsquerda; i++) /* Insere nova margem esquerda */
         linha[i] = 0;
     for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere água no meio, para evitar erros */

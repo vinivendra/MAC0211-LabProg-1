@@ -8,14 +8,14 @@
 
 /*
  Protótipos
-*/
+ */
 
 void outputLine (float *linha, int largura);
 void outputArray (float **array, int altura, int largura, int indice);
 
 /*
  Funções
-*/
+ */
 
 void outputArray (float **array, int altura, int largura, int indice) { /* Imprime a grade */
     int i;
@@ -34,5 +34,6 @@ void outputLine (float *linha, int largura) { /* Imprime a linha */
         else
             printf(agua);
     }
+    
     printf("\n");
 }
