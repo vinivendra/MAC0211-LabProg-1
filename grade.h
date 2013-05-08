@@ -6,4 +6,3 @@
 float **initGrade(int altura, int largura);
 void criaPrimeiroFrame(float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado);
 void criaProximoFrame (float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado);
-void aleatorizaMargem(float *lLine, float *fLine, int limiteDasMargens,largura){

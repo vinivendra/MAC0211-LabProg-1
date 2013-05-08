@@ -64,8 +64,8 @@ int main (int argc, char *argv[]) {
     
     if (seed == 0) {
         /* Aleatoriza a seed baseado no time */
-        srand(seed);
     }
+    srand(seed);
     
     if (larguraDoRio == 0) {
         printf("Por favor, insira um valor para a largura do rio:\n");
@@ -76,7 +76,7 @@ int main (int argc, char *argv[]) {
     
     criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado);
     
-    outputArray(grade, alturaDaGrade, larguraDoRio, i);
+    outputArray(grade, alturaDaGrade, larguraDoRio, 0);
     
     return 0;
 }

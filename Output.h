@@ -9,4 +9,4 @@
 */
 
 void outputArray (float **array, int altura, int largura, int indice);
-void clearScreen();
+void outputLine (float *linha, int largura);

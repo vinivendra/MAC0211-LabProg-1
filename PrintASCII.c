@@ -10,12 +10,26 @@ void outputArray (float **array, int altura, int largura, int indice) {
     
     for (i = altura - 1; i >= 0; i --) {
         for (j = 0; j < largura; j++) {
-	  float aaux =  array[(i+indice)%altura][j];
-	  /*if (aux == 0)
+            float aux =  array[(i+indice)%altura][j];
+            if (aux == 0)
                 printf("#");
-		else*/
-	      printf("%f ", array[(indice+i)%altura][j]);
+            else
+                printf("%d",(int)aux);
         }
         printf("\n");
     }
+}
+
+
+void outputLine (float *linha, int largura) {
+    int i = 0;
+    
+    for (i = 0; i < largura; i++) {
+        float aux =  linha[i];
+        if (aux == 0)
+            printf("#");
+        else
+            printf("%d",(int) linha[i]);
+    }
+    printf("\n");
 }
