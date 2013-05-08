@@ -10,25 +10,10 @@
 #define limiteDasMargens 0.4
 
 int main (int argc, char *argv[]) {
+    
     /*
-     velocidade do barco
-     largura do rio
-     #velocidade da água
-     #tamanho da grade
-     #probabilidade de obstáculos
-     limite esquerda
-     limite direita
-     seed (param ou time)
-     fluxo (param)
-     
-     F desejado, O obtido, Vi
-     O = EVi
-     Vi = Vi*F/O
-     
-     ########               ###         #####
-     0000000001223545434321000001234321000000
-     
-     */
+     Declaração de variáveis
+    */
     
     int velocidadeDoBarco = 0;
     int larguraDoRio = 0;
@@ -39,7 +24,6 @@ int main (int argc, char *argv[]) {
     int *indice = malloc(sizeof(int));
     
     int i = 0;
-    int j = 0;
     
     char *parametro;
     
@@ -102,16 +86,22 @@ int main (int argc, char *argv[]) {
     
     outputArray(grade, alturaDaGrade, larguraDoRio, *indice);
     
-    printf("\n\n\n\n\n");
+    printf("\n");
     
     /*
      Frames subsequentes
      */
-    *indice = (*indice - 1+alturaDaGrade) % alturaDaGrade;
     
-    criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice);
-    
-    outputArray(grade, alturaDaGrade, larguraDoRio, *indice);
+    for(;;){
+        *indice = (*indice - 1+alturaDaGrade) % alturaDaGrade;
+        
+        criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice);
+        
+        outputArray(grade, alturaDaGrade, larguraDoRio, *indice);
+        printf("\n");
+        
+        sleep(1);
+    }
     
     return 0;
 }
