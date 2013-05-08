@@ -7,7 +7,7 @@
 #define velocidadeDaAgua 10
 #define alturaDaGrade 20
 #define ProbabilidadeDeObstaculos 0
-#define limiteDasMargens 0.3
+#define limiteDasMargens 0.4
 
 int main (int argc, char *argv[]) {
     /*
@@ -28,7 +28,7 @@ int main (int argc, char *argv[]) {
      ########               ###         #####
      0000000001223545434321000001234321000000
      
-    */
+     */
     
     int velocidadeDoBarco = 0;
     int larguraDoRio = 0;
@@ -36,11 +36,23 @@ int main (int argc, char *argv[]) {
     int fluxoDesejado = 0;
     int verbose = 0;
     float **grade;
+    int *indice = malloc(sizeof(int));
     
     int i = 0;
     int j = 0;
     
     char *parametro;
+    
+    
+    /*
+     Inicialização
+     */
+    
+    *indice = 0;
+    
+    /*
+     Leitura de parametros
+     */
     
     for (i = 1; i < argc; i ++) { /* Percorre todos os parâmetros passados */
         parametro = argv[i];
@@ -62,24 +74,48 @@ int main (int argc, char *argv[]) {
         }
     }
     
+    /*
+     Seed
+     */
+    
     if (seed == 0) {
         /* Aleatoriza a seed baseado no time */
     }
     srand(seed);
+    
+    /*
+     Leitura dos parametros que faltarem
+     */
     
     if (larguraDoRio == 0) {
         printf("Por favor, insira um valor para a largura do rio:\n");
         scanf("%d", &larguraDoRio);
     }
     
+    /*
+     Primeiro frame
+     */
+    
     grade = initGrade(alturaDaGrade, larguraDoRio);
     
     criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado);
     
-    outputArray(grade, alturaDaGrade, larguraDoRio, 0);
+    outputArray(grade, alturaDaGrade, larguraDoRio, *indice);
+    
+    printf("\n\n\n\n\n");
+    
+    /*
+     Frames subsequentes
+     */
+    *indice = (*indice - 1+alturaDaGrade) % alturaDaGrade;
+    
+    criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice);
+    
+    outputArray(grade, alturaDaGrade, larguraDoRio, *indice);
     
     return 0;
 }
+
 
 
 

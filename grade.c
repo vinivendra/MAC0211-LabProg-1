@@ -28,16 +28,11 @@ void criaPrimeiroFrame(float **grade, int altura, int largura, float limiteDasMa
 }
 
 
-void criaProximoFrame (float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado){
+void criaProximoFrame (float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int *indice) {
     
-    int i;
-    float *tmp = grade[0];
-    
-    for (i = 0; i < largura - 1; i++)
-        grade[i] = grade[i+1];
-    
-    /*aleatorizaMargem (grade[largura-1], tmp,limiteDasMargens);*/
-    grade[largura -1] = tmp;
+    printf("%d\n", altura);
+    printf("%d\n", (*indice +1)%altura);
+    proximaLinha(grade[(*indice +1)%altura], grade[*indice], largura, limiteDasMargens, fluxoDesejado);
     
 }
 

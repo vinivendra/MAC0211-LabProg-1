@@ -116,7 +116,7 @@ void aleatorizaMargem(float *linhaAnterior, float *linha, float limiteDasMargens
     int resultado1 = (rand()%3) - 1;
     int resultado2 = (rand()%3) - 1;
     int i;
-        
+            
     tamanhoDaMargemEsquerda = tamanhoDaMargemEsquerda + resultado1;
     tamanhoDaMargemDireita = tamanhoDaMargemDireita + resultado2;
     
