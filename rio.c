@@ -5,6 +5,12 @@
 #include "Output.h"
 
 /*
+  Variavel gloabal
+ */
+
+int  distanciaAtualEntreIlhas = 0;
+
+/*
  Protótipos
  */
 
@@ -13,13 +19,14 @@ float velocidadeAleatoriaDaAgua(int, int, int, int, float);
 void normaliza(float *linha, int largura, int fluxoDesejado);
 int margemEsquerda (float *linha);
 int margemDireita (float *linha, int largura);
+int insereIlha(float *linha, int distanciaMinimaEntreIlhas, float probIlha, int margemEsquerda, int margemDireita, int largura);
 
 /*
  Implementações
  */
 
-void proximaLinha (float *linhaAnterior, float *linha, int largura, float limiteDasMargens, int fluxoDesejado) { /* Calcula como deve ser a nova
-                                                                                                                  linha do frame */
+void proximaLinha (float *linhaAnterior, float *linha, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) { /* Calcula como deve ser a nova
+																			     linha do frame */
     int tamanhoDaMargemEsquerda;
     int tamanhoDaMargemDireita;
     int i = 0;
@@ -34,6 +41,7 @@ void proximaLinha (float *linhaAnterior, float *linha, int largura, float limite
     }
     
     normaliza(linha, largura, fluxoDesejado);
+    insereIlha(linha, distanciaEntreIlhas, probIlha, tamanhoDaMargemEsquerda, tamanhoDaMargemDireita, largura);
     
 }
 
@@ -134,3 +142,52 @@ void aleatorizaMargem(float *linhaAnterior, float *linha, float limiteDasMargens
         linha[i] = 0;
     }
 }
+
+int insereIlha(float *linha, int distanciaMinimaEntreIlhas, float probIlha, int tmargemEsquerda, int tmargemDireita, int largura){
+  int q, i;
+  int sorteio;
+  int comecoIlha, finalIlha;
+  int aux, aux2;
+  if( distanciaAtualEntreIlhas < distanciaMinimaEntreIlhas ){
+    distanciaAtualEntreIlhas++;
+    return 0;
+  }
+
+  q = (int) ( probIlha*1000000 - 1 );
+  sorteio = rand()%1000000;
+  
+  if(sorteio > q){
+    /*com probabilidade 1-p, sorteio sera maior que q*/
+    distanciaAtualEntreIlhas++;
+    return 0;
+  }
+
+  if(sorteio <= q){
+    /*sorteio sera menor ou igual a  q com probabilidade probIlha*/
+    distanciaAtualEntreIlhas = 0;
+    aux = rand()%largura;
+    aux2 = rand()%largura;
+
+    comecoIlha = aux < aux2 ? aux : aux2;
+    finalIlha = aux < aux2 ? aux2 : aux;
+
+    if(comecoIlha <= tmargemEsquerda || comecoIlha <= tmargemEsquerda + 1) comecoIlha = tmargemEsquerda + 3;
+    if(finalIlha >= largura - tmargemDireita || finalIlha >= largura - tmargemDireita - 1) finalIlha = largura - tmargemDireita - 3;
+
+    if(comecoIlha > finalIlha){
+      aux = comecoIlha;
+      comecoIlha = finalIlha;
+      finalIlha = aux;
+    }
+
+    for(i = comecoIlha; i <= finalIlha; i++){
+      linha[i] = 0;
+    }
+  }
+    return 1;
+}
+    
+  
+
+  
+    

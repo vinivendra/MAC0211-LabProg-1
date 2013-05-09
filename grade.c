@@ -16,21 +16,21 @@ float **initGrade(int altura, int largura) {    /* Malloca espaço para a grade 
     return grade;
 }
 
-void criaPrimeiroFrame(float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado) { /* Popula a grade com os números do
+void criaPrimeiroFrame(float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) { /* Popula a grade com os números do
                                                                                                              primeiro frame */
     int i = 1;
     
     primeiraLinha(grade[0], largura, limiteDasMargens, fluxoDesejado); /* Popula a primeira linha; as outras serão criadas em cima dela */
     
     for (i = 1; i < altura; i++) {
-        proximaLinha (grade[i-1], grade[i], largura, limiteDasMargens, fluxoDesejado); /* Popula as próximas linhas, com base na 1a */
+        proximaLinha (grade[i-1], grade[i], largura, limiteDasMargens, fluxoDesejado, distanciaEntreIlhas, probIlha); /* Popula as próximas linhas, com base na 1a */
     }
     
 }
 
 
-void criaProximoFrame (float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int indice) {
-    proximaLinha(grade[(indice +1)%altura], grade[indice], largura, limiteDasMargens, fluxoDesejado); /* Cria a linha nova do frame */
+void criaProximoFrame (float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int indice, int distanciaEntreIlhas, float probIlha) {
+    proximaLinha(grade[(indice +1)%altura], grade[indice], largura, limiteDasMargens, fluxoDesejado, distanciaEntreIlhas, probIlha); /* Cria a linha nova do frame */
 }
 
 
