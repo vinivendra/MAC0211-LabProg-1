@@ -20,7 +20,7 @@ void outputArray (float **array, int altura, int largura, int indice);
 void outputArray (float **array, int altura, int largura, int indice) { /* Imprime a grade */
     int i;
     
-    for (i = altura - 1; i >= 0; i --) /* Imprime cada linha, de trás para frente */
+    for (i = 0; i < altura; i ++) /* Imprime cada linha, de trás para frente */
         outputLine(array[(i+indice)%altura], largura);
 }
 
