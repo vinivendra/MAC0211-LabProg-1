@@ -172,7 +172,7 @@ int insereIlha(float *linha, int distanciaMinimaEntreIlhas, float probIlha, int 
     finalIlha = aux < aux2 ? aux2 : aux;
 
     if(comecoIlha <= tmargemEsquerda || comecoIlha <= tmargemEsquerda + 1) comecoIlha = tmargemEsquerda + 3;
-    if(finalIlha >= largura - tmargemDireita || finalIlha >= largura - tmargemDireita - 1) finalIlha = largura - tmargemDireita - 3;
+    if(finalIlha >= largura - tmargemDireita || finalIlha >= largura - tmargemDireita - 2) finalIlha = largura - tmargemDireita - 3;
 
     if(comecoIlha > finalIlha){
       aux = comecoIlha;
