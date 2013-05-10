@@ -3,7 +3,7 @@
 #include <string.h>
 #include "util.h"
 
-void getArgs(int argc,char *argv[],int *velocidadeDoBarco, int *larguraDoRio, int *seed, int *fluxoDesejado, 
+int getArgs(int argc,char *argv[],int *velocidadeDoBarco, int *larguraDoRio, int *seed, int *fluxoDesejado, 
 	     int *verbose, int *dIlha, float *pIlha)
 {
   int read = 0;
@@ -28,4 +28,5 @@ void getArgs(int argc,char *argv[],int *velocidadeDoBarco, int *larguraDoRio, in
       exit (-1);
     }
   }
+  return read;
 }
