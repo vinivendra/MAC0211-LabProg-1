@@ -1,7 +1,7 @@
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <time.h>
 #include <string.h>
 #include "Output.h"
 #include "grade.h"
@@ -19,7 +19,8 @@ int main (int argc, char *argv[]) {
   /*
     Declaração de variáveis
   */
-  struct timespec tim, tim2;
+  struct timespec tim2;
+  struct timespec tim;
   int velocidadeDoBarco = 0;
   int larguraDoRio = 0;
   int seed = 0;
@@ -29,11 +30,6 @@ int main (int argc, char *argv[]) {
   int indice;
   int dIlha = distanciaEntreIlhas;
   float pIlha = ProbabilidadeDeObstaculos;
-    
-  int i = 0;
-    
-  char *parametro;
-    
     
   /*
     Inicialização
