@@ -40,8 +40,9 @@ void proximaLinha (float *linhaAnterior, float *linha, int largura, float limite
         linha[i] = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
     }
     
-    normaliza(linha, largura, fluxoDesejado);
     insereIlha(linha, distanciaEntreIlhas, probIlha, tamanhoDaMargemEsquerda, tamanhoDaMargemDireita, largura);
+    normaliza(linha, largura, fluxoDesejado);
+
     
 }
 
