@@ -8,7 +8,7 @@
   Variavel gloabal
  */
 
-int  distanciaAtualEntreIlhas = 0;
+static int  distanciaAtualEntreIlhas = 0;
 
 /*
  Protótipos
