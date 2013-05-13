@@ -31,9 +31,9 @@ void outputLine (float *linha, int largura) { /* Imprime a linha */
     
     for (i = 0; i < largura; i++) {
         if (linha[i] == TERRA)
-            printf("%.2f ", linha[i]);
+            printf(charTerra);
         else
-            printf("%.2f ", linha[i]);
+            printf(charAgua);
     }
     
     printf("\n");
