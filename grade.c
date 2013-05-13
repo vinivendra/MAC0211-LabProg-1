@@ -4,15 +4,15 @@
 #include "grade.h"
 
 pixel **initGrade(int altura, int largura) {    /* Malloca espaço para a grade */
-  int i = 0, j =0;
+  int i = 0;
     pixel **grade;
     
-    grade = malloc(altura*sizeof(pixel**));     /* Primeira dimensão */
+    grade = malloc(altura*sizeof(pixel*));     /* Primeira dimensão */
     
     for (i = 0; i < altura; i++) {              /* Linhas da segunda dimensão */
-        grade[i] = malloc(largura*sizeof(pixel*));
-	for(j = 0; j < largura, j++)
-	  grade[i][j] = malloc(sizeof(pixel));
+        grade[i] = malloc(largura*sizeof(pixel));
+	/*for(j = 0; j < largura; j++)
+	  grade[i][j] = malloc(sizeof(pixel));*/
     }
     
     return grade;
@@ -33,6 +33,13 @@ void criaPrimeiroFrame(pixel **grade, int altura, int largura, float limiteDasMa
 
 void criaProximoFrame (pixel **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int indice, int distanciaEntreIlhas, float probIlha) {
     proximaLinha(grade[(indice +1)%altura], grade[indice], largura, limiteDasMargens, fluxoDesejado, distanciaEntreIlhas, probIlha); /* Cria a linha nova do frame */
+}
+
+void freeGrade(pixel** grade, int altura, int largura){
+  int i;
+  for(i = 0; i < largura; i++)
+    free(grade[i]);
+  free(grade);
 }
 
 

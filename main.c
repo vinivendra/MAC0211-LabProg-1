@@ -6,6 +6,7 @@
 #include "Output.h"
 #include "grade.h"
 #include "util.h"
+#include "pixel.h"
 
 #define velocidadeDoBarcoInicial 1
 #define larguraDoRioInicial 100
@@ -111,6 +112,8 @@ int main (int argc, char *argv[]) {
     nanosleep(&tim, &tim2);
   }
     
+  freeGrade(grade, alturaDaGrade, larguraDoRio);
+
   return 0;
 }
 

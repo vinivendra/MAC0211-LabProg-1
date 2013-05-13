@@ -3,6 +3,7 @@
 #include <math.h>
 #include "Output.h"
 #include "rio.h"
+#include "pixel.h"
 
 /*
   Protótipos
@@ -26,12 +27,8 @@ void outputArray (pixel **array, int altura, int largura, int indice) { /* Impri
 void outputLine (pixel *linha, int largura) { /* Imprime a linha */
   int i = 0;
     
-  for (i = 0; i < largura; i++) {
-    if (tipo(linha[i]) ==  TERRA)
-      printf(TERRA);
-    else
-      printf(AGUA);
-  }
+  for (i = 0; i < largura; i++)
+    printf("%.2f ", linha[i].velocidade);
     
   printf("\n");
 }

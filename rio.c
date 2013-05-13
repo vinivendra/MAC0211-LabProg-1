@@ -19,17 +19,17 @@ static int  distanciaAtualEntreIlhas = 0;
 
 int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens);
 float velocidadeAleatoriaDaAgua(int, int, int, int, float);
-void normaliza(pixel **linha, int largura, int fluxoDesejado);
-int margemEsquerda (pixel **linha);
-int margemDireita (pixel **linha, int largura);
-void aleatorizaMargem(pixel **linhaAnterior, pixel **linha, float limiteDasMargens, int largura);
-int insereIlha(pixel **linha, int distanciaMinimaEntreIlhas, float probIlha, int margemEsquerda, int margemDireita, int largura);
+void normaliza(pixel *linha, int largura, int fluxoDesejado);
+int margemEsquerda (pixel *linha);
+int margemDireita (pixel *linha, int largura);
+void aleatorizaMargem(pixel *linhaAnterior, pixel *linha, float limiteDasMargens, int largura);
+int insereIlha(pixel *linha, int distanciaMinimaEntreIlhas, float probIlha, int margemEsquerda, int margemDireita, int largura);
 
 /*
   Implementações
 */
 
-void proximaLinha (pixel **linhaAnterior, pixel **linha, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) { /* Calcula como deve ser a nova
+void proximaLinha (pixel *linhaAnterior, pixel *linha, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) { /* Calcula como deve ser a nova
 																			     linha do frame */
   int tamanhoDaMargemEsquerda;
   int tamanhoDaMargemDireita;
@@ -43,7 +43,7 @@ void proximaLinha (pixel **linhaAnterior, pixel **linha, int largura, float limi
     
   for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
     v = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
-    setaVelocidade(linha[i], v);
+    setaVelocidade( &linha[i], v);
   }
     
   insereIlha(linha, distanciaEntreIlhas, probIlha, tamanhoDaMargemEsquerda, tamanhoDaMargemDireita, largura);
@@ -52,20 +52,20 @@ void proximaLinha (pixel **linhaAnterior, pixel **linha, int largura, float limi
     
 }
 
-int margemEsquerda (pixel **linha) { /* Retorna o tamanho da margem esquerda da linha */
+int margemEsquerda (pixel *linha) { /* Retorna o tamanho da margem esquerda da linha */
   int n = 0;
     
-  while ( tipo(linha[n]) == TERRA) {
+  while ( tipo(&linha[n]) == TERRA) {
     n++;
   }
     
   return n;
 }
 
-int margemDireita (pixel **linha, int largura) { /* Retorna o tamanho da margem direita da linha de tamanho 'largura' */
+int margemDireita (pixel *linha, int largura) { /* Retorna o tamanho da margem direita da linha de tamanho 'largura' */
   int n = largura-1;
     
-  while ( tipo(linha[n]) == TERRA) {
+  while ( tipo(&linha[n]) == TERRA) {
     n--;
   }
     
@@ -74,7 +74,7 @@ int margemDireita (pixel **linha, int largura) { /* Retorna o tamanho da margem 
   return largura-n;
 }
 
-void primeiraLinha(pixel **linha, int largura, float limiteDasMargens, int fluxoDesejado) { /* Insere os valores da primeira linha do programa */
+void primeiraLinha(pixel *linha, int largura, float limiteDasMargens, int fluxoDesejado) { /* Insere os valores da primeira linha do programa */
   int tamanhoDaMargemEsquerda = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
   int tamanhoDaMargemDireita = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
     
@@ -82,17 +82,17 @@ void primeiraLinha(pixel **linha, int largura, float limiteDasMargens, int fluxo
   float v;
     
   for (i = 0; i < tamanhoDaMargemEsquerda; i++) { /* Insere a margem esquerda */
-    setaTipo(linha[i],  TERRA);
-    setaVelocidade(linha[i], 0);
+    setaTipo(&linha[i],  TERRA);
+    setaVelocidade(&linha[i], 0);
   }
   for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
     v = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
-    setaTipo(linha[i], AGUA);
-    setaVelocidade(linha[i], v);
+    setaTipo(&linha[i], AGUA);
+    setaVelocidade(&linha[i], v);
   }
   for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
-    setaTipo(linha[i], TERRA);
-    setaVelocidade(linha[i], 0);
+    setaTipo(&linha[i], TERRA);
+    setaVelocidade(&linha[i], 0);
   }
   normaliza(linha, largura, fluxoDesejado);
 }
@@ -117,25 +117,25 @@ float velocidadeAleatoriaDaAgua (int  posicaoNaLinha, int margemDireita, int mar
   return velocidadeNova;
 }
 
-void normaliza(pixel **linha, int largura, int fluxoDesejado) { /* Normaliza a linha para ter o fluxo desejado */
+void normaliza(pixel *linha, int largura, int fluxoDesejado) { /* Normaliza a linha para ter o fluxo desejado */
   int i = 0;
   float fluxoObtido = 0;
   float novaVel, vel;
     
   for (i = 0; i < largura; i++) { /* O fluxo obtido é a soma de todas as velocidades */
-    if ( tipo( linha[i] ) != TERRA  )
-      fluxoObtido += velocidade(linha[i]);
+    if ( tipo(& linha[i] ) != TERRA  )
+      fluxoObtido += velocidade(&linha[i]);
   }
   for (i = 0; i < largura; i++) { /* Transforma a linha numa que tenha o fluxo desejado */
-    if ( tipo(linha[i]) != TERRA){
-      vel = velocidade(linha[i]);
+    if ( tipo(&linha[i]) != TERRA){
+      vel = velocidade(&linha[i]);
       novaVel = 1.0*vel*fluxoDesejado/fluxoObtido;
-      setaVelocidade(linha[i], novaVel);
+      setaVelocidade(&linha[i], novaVel);
     }
   }
 }
 
-void aleatorizaMargem(pixel **linhaAnterior, pixel **linha, float limiteDasMargens, int largura){ /* Calcula o novo tamanho das margens, baseado
+void aleatorizaMargem(pixel *linhaAnterior, pixel *linha, float limiteDasMargens, int largura){ /* Calcula o novo tamanho das margens, baseado
 												   na linha anterior */
   int tamanhoDaMargemEsquerda = margemEsquerda(linhaAnterior);
   int tamanhoDaMargemDireita = margemDireita(linhaAnterior, largura);
@@ -152,20 +152,20 @@ void aleatorizaMargem(pixel **linhaAnterior, pixel **linha, float limiteDasMarge
   else if (tamanhoDaMargemDireita > limiteDasMargens * largura) tamanhoDaMargemDireita = limiteDasMargens * largura;
     
   for (i = 0; i < tamanhoDaMargemEsquerda; i++){ /* Insere nova margem esquerda */
-    setaTipo(linha[i], TERRA);
-    setaVelocidade(linha[i], 0);
+    setaTipo(&linha[i], TERRA);
+    setaVelocidade(&linha[i], 0);
   }
   for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere água no meio, para evitar erros. VAI DAR PAU */
-    setaVelocidade(linha[i], 1);
-    setaTipo(linha[i], AGUA);
+    setaVelocidade(&linha[i], 1);
+    setaTipo(&linha[i], AGUA);
   }
   for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere nova margem direita */
-    setaTipo(linha[i], TERRA);
-    setaVelocidade(linha[i], 0);
+    setaTipo(&linha[i], TERRA);
+    setaVelocidade(&linha[i], 0);
   }
 }
 
-int insereIlha(pixel **linha, int distanciaMinimaEntreIlhas, float probIlha, int tmargemEsquerda, int tmargemDireita, int largura){
+int insereIlha(pixel *linha, int distanciaMinimaEntreIlhas, float probIlha, int tmargemEsquerda, int tmargemDireita, int largura){
   int q, i;
   int sorteio;
   int comecoIlha, finalIlha;
@@ -209,8 +209,8 @@ int insereIlha(pixel **linha, int distanciaMinimaEntreIlhas, float probIlha, int
     }
         
     for(i = comecoIlha; i <= finalIlha; i++){
-      setaTipo(linha[i], TERRA);
-      setaVelocidade(linha[i], 0);
+      setaTipo(&linha[i], TERRA);
+      setaVelocidade(&linha[i], 0);
     }
   }
   return 1;

@@ -6,7 +6,7 @@ float velocidade(pixel *p){
   return p->velocidade;
 }
 
-char tipo(pixel* p){
+char tipo(pixel *p){
   return p->tipo;
 }
 
@@ -17,3 +17,4 @@ void setaVelocidade(pixel* p, float vel){
 void setaTipo(pixel* p, char type){
   p->tipo = type;
 }
+
