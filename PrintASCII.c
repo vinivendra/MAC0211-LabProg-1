@@ -28,10 +28,10 @@ void outputLine (pixel *linha, int largura) { /* Imprime a linha */
   int i = 0;
     
   for (i = 0; i < largura; i++){
-    if ((linha[i-1].tipo == '#' && linha[i].tipo == '.' ) || (linha[i].tipo == '.' && linha[i+1].tipo == '#'))
+    /*if ((linha[i-1].tipo == '#' && linha[i].tipo == '.' ) || (linha[i].tipo == '.' && linha[i+1].tipo == '#'))
 	printf("^");
-    else
-      printf ("%c",linha[i].tipo);
+	else*/
+    printf ("%f%c ",linha[i].velocidade, linha[i].tipo);
   }
   printf("\n");
 }

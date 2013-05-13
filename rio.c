@@ -127,11 +127,16 @@ float velocidadeAleatoriaDaAgua (int  posicaoNaLinha, int margemDireita, int mar
 float velocidadeDaAguaPrimeiraLinha (float velocidadePontoAnterior) {/*adotamos que apenas nas margens do rio e das ilhas a velocidade admite ser zero*/
   /* Calcula um valor aleatório para ser a velocidade da água */
   float aleatorio = 1.0*rand()/RAND_MAX - 0.5; /*gera um número aleatório entre [-0.5,0.5]*/
-  
+  float v;
+
   if (velocidadePontoAnterior == 0)
       return 1.0*rand()/RAND_MAX;
   
-  return abs(velocidadePontoAnterior+ aleatório); 
+  v = aleatorio + velocidadePontoAnterior;
+  if( v < 0 ) v = -v;
+  if(v == 0) v = 1.0*rand()/RAND_MAX;
+
+  return v; 
 }
 
 void normaliza(pixel *linha, int largura, int fluxoDesejado) { /* Normaliza a linha para ter o fluxo desejado */
