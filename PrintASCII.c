@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include "Output.h"
+#include "rio.h"
 
-#define terra "#"
-#define agua  "."
+#define charTerra "#"
+#define charAgua  "."
 
 /*
  Protótipos
@@ -29,10 +30,10 @@ void outputLine (float *linha, int largura) { /* Imprime a linha */
     int i = 0;
     
     for (i = 0; i < largura; i++) {
-        if (linha[i] == 0)
-            printf(terra);
+        if (linha[i] == TERRA)
+            printf("%.2f ", linha[i]);
         else
-            printf(agua);
+            printf("%.2f ", linha[i]);
     }
     
     printf("\n");

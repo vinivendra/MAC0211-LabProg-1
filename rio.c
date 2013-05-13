@@ -49,7 +49,7 @@ void proximaLinha (float *linhaAnterior, float *linha, int largura, float limite
 int margemEsquerda (float *linha) { /* Retorna o tamanho da margem esquerda da linha */
     int n = 0;
     
-    while (linha[n] == 0) {
+    while (linha[n] == TERRA) {
         n++;
     }
     
@@ -59,7 +59,7 @@ int margemEsquerda (float *linha) { /* Retorna o tamanho da margem esquerda da l
 int margemDireita (float *linha, int largura) { /* Retorna o tamanho da margem direita da linha de tamanho 'largura' */
     int n = largura-1;
     
-    while (linha[n] == 0) {
+    while (linha[n] == TERRA) {
         n--;
     }
     
@@ -75,13 +75,13 @@ void primeiraLinha(float *linha, int largura, float limiteDasMargens, int fluxoD
     int i = 0;
     
     for (i = 0; i < tamanhoDaMargemEsquerda; i++) { /* Insere a margem esquerda */
-        linha[i] = 0;
+        linha[i] = TERRA;
     }
     for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
         linha[i] = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
     }
     for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
-        linha[i] = 0;
+        linha[i] = TERRA;
     }
     normaliza(linha, largura, fluxoDesejado);
 }
@@ -111,10 +111,12 @@ void normaliza(float *linha, int largura, int fluxoDesejado) { /* Normaliza a li
     float fluxoObtido = 0;
     
     for (i = 0; i < largura; i++) { /* O fluxo obtido é a soma de todas as velocidades */
-        fluxoObtido += linha[i];
+        if (linha[i] != TERRA)
+            fluxoObtido += linha[i];
     }
     for (i = 0; i < largura; i++) { /* Transforma a linha numa que tenha o fluxo desejado */
-        linha[i] = 1.0*linha[i]*fluxoDesejado/fluxoObtido;
+        if (linha[i] != TERRA)
+            linha[i] = 1.0*linha[i]*fluxoDesejado/fluxoObtido;
     }
 }
 
@@ -135,12 +137,12 @@ void aleatorizaMargem(float *linhaAnterior, float *linha, float limiteDasMargens
     else if (tamanhoDaMargemDireita > limiteDasMargens * largura) tamanhoDaMargemDireita = limiteDasMargens * largura;
     
     for (i = 0; i < tamanhoDaMargemEsquerda; i++) /* Insere nova margem esquerda */
-        linha[i] = 0;
+        linha[i] = TERRA;
     for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere água no meio, para evitar erros */
         linha[i] = 1;
     }
     for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere nova margem direita */
-        linha[i] = 0;
+        linha[i] = TERRA;
     }
 }
 
@@ -165,6 +167,7 @@ int insereIlha(float *linha, int distanciaMinimaEntreIlhas, float probIlha, int 
 
   if(sorteio <= q){
     /*sorteio sera menor ou igual a  q com probabilidade probIlha*/
+      
     distanciaAtualEntreIlhas = 0;
     aux = rand()%largura;
     aux2 = rand()%largura;
@@ -182,7 +185,7 @@ int insereIlha(float *linha, int distanciaMinimaEntreIlhas, float probIlha, int 
     }
 
     for(i = comecoIlha; i <= finalIlha; i++){
-      linha[i] = 0;
+      linha[i] = TERRA;
     }
   }
     return 1;
