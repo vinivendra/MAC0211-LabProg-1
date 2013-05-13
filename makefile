@@ -1,6 +1,6 @@
 execName = ep2
 execOptions =  -g -o $(execName) -lm -lc
-objOptions = -g -ansi -pedantic -Wall -lm -lc
+objOptions = -g -pedantic -Wall -lm -lc
 objects = main.o PrintASCII.o grade.o rio.o util.o
 
 

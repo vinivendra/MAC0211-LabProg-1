@@ -1,6 +1,6 @@
-#include <time.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 #include <math.h>
 #include <string.h>
 #include "Output.h"
@@ -8,7 +8,7 @@
 #include "util.h"
 
 #define velocidadeDaAgua 10
-#define alturaDaGrade 41
+#define alturaDaGrade 30
 #define ProbabilidadeDeObstaculos 0.5
 #define limiteDasMargens 0.2
 #define distanciaEntreIlhas 10
@@ -83,7 +83,8 @@ int main (int argc, char *argv[]) {
     
   outputArray(grade, alturaDaGrade, larguraDoRio, indice);
     
-  printf("\n");
+  /* printf("\n");*/
+  clearScreen();
     
   /*
     Frames subsequentes
@@ -95,7 +96,8 @@ int main (int argc, char *argv[]) {
     criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice, dIlha, pIlha);
         
     outputArray(grade, alturaDaGrade, larguraDoRio, indice);
-    printf("\n");
+    /*printf("\n");*/
+    clearScreen();
         
     nanosleep(&tim, &tim2);
   }
