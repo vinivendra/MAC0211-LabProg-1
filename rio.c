@@ -16,7 +16,7 @@ static int  distanciaAtualEntreIlhas = 0;
 /*
   Protótipos
 */
-
+float velocidadeDaAguaPrimeiraLinha (float velocidadePontoAnterior);
 int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens);
 float velocidadeAleatoriaDaAgua(int, int, int, int, float);
 void normaliza(pixel *linha, int largura, int fluxoDesejado);
@@ -97,7 +97,7 @@ void primeiraLinha(pixel *linha, int largura, float limiteDasMargens, int fluxoD
     if (linha[i-1].tipo == TERRA || linha[i+1].tipo == TERRA)
 	setaVelocidade(&linha[i],0);
     else{
-	v = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
+	v = velocidadeDaAguaPrimeiraLinha (linha[i-1].velocidade);
 	setaVelocidade(&linha[i], v);
     }
   }
@@ -122,6 +122,16 @@ float velocidadeAleatoriaDaAgua (int  posicaoNaLinha, int margemDireita, int mar
   else velocidadeNova = 1.0*rand()/RAND_MAX + 1;
     
   return velocidadeNova;
+}
+
+float velocidadeDaAguaPrimeiraLinha (float velocidadePontoAnterior) {/*adotamos que apenas nas margens do rio e das ilhas a velocidade admite ser zero*/
+  /* Calcula um valor aleatório para ser a velocidade da água */
+  float aleatorio = 1.0*rand()/RAND_MAX - 0.5; /*gera um número aleatório entre [-0.5,0.5]*/
+  
+  if (velocidadePontoAnterior == 0)
+      return 1.0*rand()/RAND_MAX;
+  
+  return abs(velocidadePontoAnterior+ aleatório); 
 }
 
 void normaliza(pixel *linha, int largura, int fluxoDesejado) { /* Normaliza a linha para ter o fluxo desejado */
