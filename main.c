@@ -7,102 +7,111 @@
 #include "grade.h"
 #include "util.h"
 
-#define velocidadeDaAgua 10
+#define velocidadeDoBarcoInicial 10
+#define larguraDoRioInicial 100
+#define fluxoDesejadoInicial 50
 #define alturaDaGrade 30
-#define ProbabilidadeDeObstaculos 0.5
+#define distanciaEntreIlhasInicial 10
+#define probabilidadeDeObstaculosInicial 0.5
+
 #define limiteDasMargens 0.2
-#define distanciaEntreIlhas 10
 
 
 int main (int argc, char *argv[]) {
     
-  /*
-    Declaração de variáveis
-  */
-  struct timespec tim2;
-  struct timespec tim;
-  int velocidadeDoBarco = 0;
-  int larguraDoRio = 0;
-  int seed = 0;
-  int fluxoDesejado = 0;
-  int verbose = 0;
-  float **grade;
-  int indice;
-  int dIlha = distanciaEntreIlhas;
-  float pIlha = ProbabilidadeDeObstaculos;
+    /*
+     Declaração de variáveis
+     */
+
+    int velocidadeDoBarco = velocidadeDoBarcoInicial;
+    int larguraDoRio = larguraDoRioInicial;
+    int fluxoDesejado = fluxoDesejadoInicial;
+    int dIlha = distanciaEntreIlhasInicial;
+    float pIlha = probabilidadeDeObstaculosInicial;
     
-  /*
-    Inicialização
-  */
+    struct timespec tim2;
+    struct timespec tim;
     
-  indice = 0;
-  tim.tv_sec  = 0;
-  tim.tv_nsec = 100000000L;
+    int seed = 0;
+    int verbose = 0;
+    int indice = 0;
+    float **grade;
     
-  /*
-    Leitura de parametros
-  */
+    /*
+     Inicialização
+     */
     
-  getArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha);
-  
-  printf ("\t \t Opcoes disponiveis: \n"
-	  "-b = %d  - Velocidade do barco\n"
-	  "-l = %d  - Largura do Rio\n"
-	  "-s = %d  - semente para o gerador aleatorio\n"
-	  "-f = %d  - Fluxo da agua\n"
-	  "-v = %d  - Verbose\n"
-	  "-pI = %f - Probabilidade de haver obstaculos\n"
-	  "-dI = %d - Distancia minima entre obstaculos\n",velocidadeDoBarco, larguraDoRio, seed, fluxoDesejado, verbose, pIlha, dIlha);
+    tim.tv_sec  = 0;
+    tim.tv_nsec = 100000000L;
     
-  /*
-    Seed
-  */
+    /*
+     Leitura de parametros
+     */
     
-  if (seed == 0) {
-    /* Aleatoriza a seed baseado no time */
-    seed = time(NULL);
-  }
-  srand(seed);
+    getArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha);
     
-  /*
-    Leitura dos parametros que faltarem
-  */
+    if (verbose) {
+        printf ("\t \t Opcoes disponiveis: \n"
+            "-b = %d  - Velocidade do barco\n"
+            "-l = %d  - Largura do Rio\n"
+            "-s = %d  - semente para o gerador aleatorio\n"
+            "-f = %d  - Fluxo da agua\n"
+            "-v = %d  - Verbose\n"
+            "-pI = %f - Probabilidade de haver obstaculos\n"
+            "-dI = %d - Distancia minima entre obstaculos\n"
+            "Pressione Enter para continuar...\n", velocidadeDoBarco, larguraDoRio, seed, fluxoDesejado, verbose, pIlha, dIlha);
+        getchar();
+    }
     
-  if (larguraDoRio == -1) {
-    printf("Por favor, insira um valor para a largura do rio:\n");
-    scanf("%d", &larguraDoRio);
-  }
+    /*
+     Seed
+     */
     
-  /*
-    Primeiro frame
-  */
+    if (seed == 0) {
+        /* Aleatoriza a seed baseado no time */
+        seed = time(NULL);
+    }
+    srand(seed);
     
-  grade = initGrade(alturaDaGrade, larguraDoRio);
+    /*
+     Leitura dos parametros que faltarem
+     */
     
-  criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, dIlha, pIlha);
+    if (larguraDoRio == -1) {
+        printf("Por favor, insira um valor para a largura do rio:\n");
+        scanf("%d", &larguraDoRio);
+    }
     
-  outputArray(grade, alturaDaGrade, larguraDoRio, indice);
+    /*
+     Primeiro frame
+     */
     
-  /* printf("\n");*/
-  clearScreen();
+    grade = initGrade(alturaDaGrade, larguraDoRio);
     
-  /*
-    Frames subsequentes
-  */
+    criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, dIlha, pIlha);
     
-  for(;;){
-    indice = (indice - 1+alturaDaGrade) % alturaDaGrade;
-        
-    criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice, dIlha, pIlha);
-        
     outputArray(grade, alturaDaGrade, larguraDoRio, indice);
-    /*printf("\n");*/
-    clearScreen();
-        
-    nanosleep(&tim, &tim2);
-  }
     
-  return 0;
+    /* printf("\n");*/
+    clearScreen();
+    
+    /*
+     Frames subsequentes
+     */
+    
+    for(;;){
+        indice = (indice - 1+alturaDaGrade) % alturaDaGrade;
+        
+        criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice, dIlha, pIlha);
+        
+        outputArray(grade, alturaDaGrade, larguraDoRio, indice);
+        /*printf("\n");*/
+        clearScreen();
+        
+        nanosleep(&tim, &tim2);
+    }
+    
+    return 0;
 }
 
 
