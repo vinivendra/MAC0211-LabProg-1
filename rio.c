@@ -85,14 +85,21 @@ void primeiraLinha(pixel *linha, int largura, float limiteDasMargens, int fluxoD
     setaTipo(&linha[i],  TERRA);
     setaVelocidade(&linha[i], 0);
   }
-  for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a água */
-    v = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
+  for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) /* Insere a água */
     setaTipo(&linha[i], AGUA);
-    setaVelocidade(&linha[i], v);
-  }
+  
   for (i = largura - tamanhoDaMargemDireita; i < largura; i++) { /* Insere a margem direita */
     setaTipo(&linha[i], TERRA);
     setaVelocidade(&linha[i], 0);
+  }
+  
+  for (i = tamanhoDaMargemEsquerda; i < largura - tamanhoDaMargemDireita; i++) { /* Insere a velocidade água */
+    if (linha[i-1].tipo == TERRA || linha[i+1].tipo == TERRA)
+	setaVelocidade(&linha[i],0);
+    else{
+	v = velocidadeAleatoriaDaAgua(i, tamanhoDaMargemDireita, tamanhoDaMargemEsquerda, largura, limiteDasMargens);
+	setaVelocidade(&linha[i], v);
+    }
   }
   normaliza(linha, largura, fluxoDesejado);
 }
@@ -170,7 +177,7 @@ int insereIlha(pixel *linha, int distanciaMinimaEntreIlhas, float probIlha, int 
   int sorteio;
   int comecoIlha, finalIlha;
   int aux, aux2;
-  if( distanciaAtualEntreIlhas < distanciaMinimaEntreIlhas ){
+  if( distanciaAtualEntreIlhas < distanciaMinimaEntreIlhas - 1){
     distanciaAtualEntreIlhas++;
     return 0;
   }

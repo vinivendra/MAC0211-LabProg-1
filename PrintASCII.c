@@ -27,8 +27,11 @@ void outputArray (pixel **array, int altura, int largura, int indice) { /* Impri
 void outputLine (pixel *linha, int largura) { /* Imprime a linha */
   int i = 0;
     
-  for (i = 0; i < largura; i++)
-    printf("%.2f ", linha[i].velocidade);
-    
+  for (i = 0; i < largura; i++){
+    if ((linha[i-1].tipo == '#' && linha[i].tipo == '.' ) || (linha[i].tipo == '.' && linha[i+1].tipo == '#'))
+	printf("^");
+    else
+      printf ("%c",linha[i].tipo);
+  }
   printf("\n");
 }
