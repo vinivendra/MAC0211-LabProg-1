@@ -4,37 +4,34 @@
 #include "Output.h"
 #include "rio.h"
 
-#define charTerra "#"
-#define charAgua  "."
+/*
+  Protótipos
+*/
+
+void outputLine (pixel *linha, int largura);
+void outputArray (pixel **array, int altura, int largura, int indice);
 
 /*
- Protótipos
- */
+  Funções
+*/
 
-void outputLine (float *linha, int largura);
-void outputArray (float **array, int altura, int largura, int indice);
-
-/*
- Funções
- */
-
-void outputArray (float **array, int altura, int largura, int indice) { /* Imprime a grade */
-    int i;
+void outputArray (pixel **array, int altura, int largura, int indice) { /* Imprime a grade */
+  int i;
     
-    for (i = 0; i < altura; i ++) /* Imprime cada linha, de trás para frente */
-        outputLine(array[(i+indice)%altura], largura);
+  for (i = 0; i < altura; i ++) /* Imprime cada linha, de trás para frente */
+    outputLine(array[(i+indice)%altura], largura);
 }
 
 
-void outputLine (float *linha, int largura) { /* Imprime a linha */
-    int i = 0;
+void outputLine (pixel *linha, int largura) { /* Imprime a linha */
+  int i = 0;
     
-    for (i = 0; i < largura; i++) {
-        if (linha[i] == TERRA)
-            printf(charTerra);
-        else
-            printf(charAgua);
-    }
+  for (i = 0; i < largura; i++) {
+    if (tipo(linha[i]) ==  TERRA)
+      printf(TERRA);
+    else
+      printf(AGUA);
+  }
     
-    printf("\n");
+  printf("\n");
 }

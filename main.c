@@ -19,32 +19,32 @@
 
 int main (int argc, char *argv[]) {
     
-    /*
-     Declaração de variáveis
-     */
+  /*
+    Declaração de variáveis
+  */
 
-    float velocidadeDoBarco = velocidadeDoBarcoInicial;
-    int larguraDoRio = larguraDoRioInicial;
-    int fluxoDesejado = fluxoDesejadoInicial;
-    int dIlha = distanciaEntreIlhasInicial;
-    float pIlha = probabilidadeDeObstaculosInicial;
+  float velocidadeDoBarco = velocidadeDoBarcoInicial;
+  int larguraDoRio = larguraDoRioInicial;
+  int fluxoDesejado = fluxoDesejadoInicial;
+  int dIlha = distanciaEntreIlhasInicial;
+  float pIlha = probabilidadeDeObstaculosInicial;
     
-    struct timespec tim2;
-    struct timespec tim;
+  struct timespec tim2;
+  struct timespec tim;
     
-    int seed = 0;
-    int verbose = 0;
-    int indice = 0;
-    float **grade;
+  int seed = 0;
+  int verbose = 0;
+  int indice = 0;
+  pixel **grade;
     
-    /*
-     Leitura de parametros
-     */
+  /*
+    Leitura de parametros
+  */
     
-    getArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha);
+  getArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha);
     
-    if (verbose) {
-        printf ("\t \t Opcoes disponiveis: \n"
+  if (verbose) {
+    printf ("\t \t Opcoes disponiveis: \n"
             "-b = %f  - Velocidade do barco\n"
             "-l = %d  - Largura do Rio\n"
             "-s = %d  - semente para o gerador aleatorio\n"
@@ -53,65 +53,65 @@ int main (int argc, char *argv[]) {
             "-pI = %f - Probabilidade de haver obstaculos\n"
             "-dI = %d - Distancia minima entre obstaculos\n"
             "Pressione Enter para continuar...\n", velocidadeDoBarco, larguraDoRio, seed, fluxoDesejado, verbose, pIlha, dIlha);
-        getchar();
-    }
+    getchar();
+  }
     
-    /*
-     Inicialização
-     */
+  /*
+    Inicialização
+  */
     
-    tim.tv_sec  = 0;
-    tim.tv_nsec = 100000000/velocidadeDoBarco;
+  tim.tv_sec  = 0;
+  tim.tv_nsec = 100000000/velocidadeDoBarco;
     
-    /*
-     Seed
-     */
+  /*
+    Seed
+  */
     
-    if (seed == 0) {
-        /* Aleatoriza a seed baseado no time */
-        seed = time(NULL);
-    }
-    srand(seed);
+  if (seed == 0) {
+    /* Aleatoriza a seed baseado no time */
+    seed = time(NULL);
+  }
+  srand(seed);
     
-    /*
-     Leitura dos parametros que faltarem
-     */
+  /*
+    Leitura dos parametros que faltarem
+  */
     
-    if (larguraDoRio == -1) {
-        printf("Por favor, insira um valor para a largura do rio:\n");
-        scanf("%d", &larguraDoRio);
-    }
+  if (larguraDoRio == -1) {
+    printf("Por favor, insira um valor para a largura do rio:\n");
+    scanf("%d", &larguraDoRio);
+  }
     
-    /*
-     Primeiro frame
-     */
+  /*
+    Primeiro frame
+  */
     
-    grade = initGrade(alturaDaGrade, larguraDoRio);
+  grade = initGrade(alturaDaGrade, larguraDoRio);
     
-    criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, dIlha, pIlha);
+  criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, dIlha, pIlha);
     
+  outputArray(grade, alturaDaGrade, larguraDoRio, indice);
+    
+  /* printf("\n");*/
+  clearScreen();
+    
+  /*
+    Frames subsequentes
+  */
+    
+  for(;;){
+    indice = (indice - 1+alturaDaGrade) % alturaDaGrade;
+        
+    criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice, dIlha, pIlha);
+        
     outputArray(grade, alturaDaGrade, larguraDoRio, indice);
-    
-    /* printf("\n");*/
+    /*printf("\n");*/
     clearScreen();
-    
-    /*
-     Frames subsequentes
-     */
-    
-    for(;;){
-        indice = (indice - 1+alturaDaGrade) % alturaDaGrade;
         
-        criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice, dIlha, pIlha);
-        
-        outputArray(grade, alturaDaGrade, larguraDoRio, indice);
-        /*printf("\n");*/
-        clearScreen();
-        
-        nanosleep(&tim, &tim2);
-    }
+    nanosleep(&tim, &tim2);
+  }
     
-    return 0;
+  return 0;
 }
 
 

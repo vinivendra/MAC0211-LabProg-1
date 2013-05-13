@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "pixel.h"
 
 /*
  Interface para colocar na tela o que o programa quiser. Escrita de forma genérica,
@@ -8,5 +9,5 @@
  padrão, seja numa janela separada em cores.
 */
 
-void outputArray (float **array, int altura, int largura, int indice);
-void outputLine (float *linha, int largura);
+void outputArray (pixel **array, int altura, int largura, int indice);
+void outputLine (pixel *linha, int largura);

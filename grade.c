@@ -3,20 +3,22 @@
 #include <math.h>
 #include "grade.h"
 
-float **initGrade(int altura, int largura) {    /* Malloca espaço para a grade */
-    int i = 0;
-    float **grade;
+pixel **initGrade(int altura, int largura) {    /* Malloca espaço para a grade */
+  int i = 0, j =0;
+    pixel **grade;
     
-    grade = malloc(altura*sizeof(float *));     /* Primeira dimensão */
+    grade = malloc(altura*sizeof(pixel**));     /* Primeira dimensão */
     
     for (i = 0; i < altura; i++) {              /* Linhas da segunda dimensão */
-        grade[i] = malloc(largura*sizeof(float));
+        grade[i] = malloc(largura*sizeof(pixel*));
+	for(j = 0; j < largura, j++)
+	  grade[i][j] = malloc(sizeof(pixel));
     }
     
     return grade;
 }
 
-void criaPrimeiroFrame(float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) { /* Popula a grade com os números do
+void criaPrimeiroFrame(pixel **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) { /* Popula a grade com os números do
                                                                                                              primeiro frame */
     int i = 1;
     
@@ -29,7 +31,7 @@ void criaPrimeiroFrame(float **grade, int altura, int largura, float limiteDasMa
 }
 
 
-void criaProximoFrame (float **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int indice, int distanciaEntreIlhas, float probIlha) {
+void criaProximoFrame (pixel **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int indice, int distanciaEntreIlhas, float probIlha) {
     proximaLinha(grade[(indice +1)%altura], grade[indice], largura, limiteDasMargens, fluxoDesejado, distanciaEntreIlhas, probIlha); /* Cria a linha nova do frame */
 }
 
