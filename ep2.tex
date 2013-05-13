@@ -1,0 +1,213 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[brazil]{babel}
+\usepackage{listings}
+\lstset{language=C}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\begin{document}
+
+\begin{center}{\Large \bf Documenta\c{c}ão EP2 Canoagem \\ }\end{center}
+\begin{center}{\Large \bf Manual do Desenvolvedor\\ }\end{center}
+
+\begin{center}
+{
+Fellipe Souto Sampaio\footnote{e-mail: fellipe.sampaio@usp.com}
+Gervásio Santos \footnote{foo}
+Vinícius Verdamini \footnote{foo2}
+}
+
+\end{center}
+
+\begin{center}
+MAC 0211 Laboratório de Programa\c{c}ão I \\
+Prof. Kelly Rosa Braghetto \\
+             
+\end{center}
+
+\begin{center}
+Instituto de Matemática e Estatística - IME USP \\
+ Rua do Matão 1010 \\
+ 05311-970\, Cidade Universitária, São Paulo - SP \\
+\end{center}
+
+\newpage
+
+\section{Introdu\c{c}ão}
+Esta documenta\c{c}ão apresenta uma completa descri\c{c}ão do funcionamento do exercício programa 2-A, divido através de sua implementa\c{c}ão nos .c e .h ,com uma breve descri\c{c}ão dos algorítmos utilizados em cada método.
+
+\section{Main}
+\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{b =  Velocidade do barco}
+\item[•]{l =  Largura do rio}
+\item[•]{s =  Semente do gerador de números aleatórios}
+\item[•]{f =  Fluxo da água}
+\item[•]{v =  Verbose}
+\item[•]{pI = Distância mínima entre ilhas}
+\item[•]{dI = Probabilidade de existência de ilha}
+
+
+\end{enumerate}
+
+\textbf{Saída:} 0 se a execução ocorrer sem falha.\\
+
+\textbf{Descrição:}
+O programa recebe seus argumentos de funcionamento através da linha de comando, chama diversos métodos para a cria\c{c}ão, administra\c{c}ão da grade e impressão, podendo ser interrompido pelo usuário caso este pressione o comando CRTL+c.
+
+\section{Util}
+\subsection{getArgvs}
+\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{int argc}
+\item[•]{char *argv[]}
+\item[•]{int *velocidadeDoBarco}
+\item[•]{int *larguraDorio}
+\item[•]{int seed}
+\item[•]{int *fluxoDesejado}
+\item[•]{int *verbose}
+\item[•]{int *dIlha}
+\item[•]{int *pIlha}
+\end{enumerate}
+\textbf{Saída:} Nenhum, a fun\c{c}ão trabalha com ponteiros para os parâmetros passados.\\
+
+\textbf{Descrição:}
+Procura com a fun\c{c}ão sscanf padrões de escrita bem definidos nas strings argv[argc] para servirem como configura\c{c}ão das principais variá-veis de defini\c{c}ão do programa.
+
+\subsection{timespec}
+\textbf{Descrição:}
+Estrutura de dados usada para especificar intervalos de tempo com precisão de nanosegundos. Seu uso é necessário na fun\c{c}ão nanosleep, que recebe duas dessas estruturas, uma constante e outra não inicializada, e realiza uma pausa no processamento do programa, causando um pequeno delay entre duas instru\c{c}ões.
+
+\section{Grade}
+
+\subsection{initGrade}\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{int largura}
+\item[•]{int altura}
+\end{enumerate}
+
+\textbf{Saída:} Uma matrix de tamanho largura $\times$ altura.\\
+
+\textbf{Descrição:}
+Aloca dinâmicamente uma matrix float largura $\times$ altura para o usuário e retorna um ponteiro para ela.
+
+\subsection{criaPrimeiroFrame}
+\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{float **grade}
+\item[•]{int altura}
+\item[•]{int largura}
+\item[•]{int limiteDasMargens}
+\item[•]{int fluxoDesejado}
+\item[•]{int distanciaEntreIlhas}
+\item[•]{float probIlha}
+\end{enumerate}
+
+\textbf{Saída:} O primeiro frame do rio.\\
+
+\textbf{Descrição:} Cria a primeira linha com o método \textit{primeiraLinha} a qual servira como semente para as demais linhas criadas através de \textit{proximaLinha}.
+
+\subsection{criaProximoFrame}
+\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{float **grade}
+\item[•]{int altura}
+\item[•]{int largura}
+\item[•]{int limiteDasMargens}
+\item[•]{int fluxoDesejado}
+\item[•]{int indice}
+\item[•]{int distanciaEntreIlhas}
+\item[•]{float probIlha}
+\end{enumerate}
+
+\textbf{Saída:} O proximo frame do rio.\\
+
+\textbf{Descrição:} Utiliza o método \textit{proximaLinha} para criar uma nova linha, dando origem a um novo frame.
+
+\section{Rio}
+
+\subsection{primeiraLinha}
+\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{float *linha}
+\item[•]{int largura}
+\item[•]{float limiteDasMargens}
+\item[•]{int fluxoDesejado}
+\end{enumerate}
+
+\textbf{Saída:} A primeira linha gerada pelo programa, que servirá como base para todas
+as outras.\\
+
+\textbf{Descrição:} Primeiramente a fun\c{c}ão utiliza \textit{tamanhoDaPrimeiraMargem} para obter dois valores que serão o comprimento da margem esquerda e direita. Para as coordenadas da linha que fazem parte das margens é atribuido o valor zero, coordenadas entre margens recebem um valor float aleatório que depois é normalizado por \textit{normaliza} no valor do fluxo desejado. 
+
+\subsection{primeiraLinha}
+\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{float *linha}
+\item[•]{int largura}
+\item[•]{float limiteDasMargens}
+\item[•]{int fluxoDesejado}
+\end{enumerate}
+
+\textbf{Saída:} A primeira linha gerada pelo programa, que servirá como base para todas
+as outras.\\
+
+\textbf{Descrição:} Primeiramente a fun\c{c}ão utiliza \textit{tamanhoDaPrimeiraMargem} para obter dois valores que serão o comprimento da margem esquerda e direita. Para as coordenadas da linha que fazem parte das margens é atribuido o valor zero, coordenadas entre margens recebem um valor float aleatório que depois é normalizado por \textit{normaliza} no valor do fluxo desejado.
+
+\subsection{tamanhoDaPrimeiraMargem}
+\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{float largura}
+\item[•]{float limiteDasMargens}
+\end{enumerate}
+
+\textbf{Saída:} Um inteiro aleatório para a margem da primeira linha.\\
+
+\textbf{Descrição:} A fun\c{c}ão sorteia um inteiro no intervalo $[1,max]$, define-se max como o produto de largura pela macro limiteDasMargens.
+
+\subsection{velocidadeAleatoriaDaAgua (verificar)}
+\textbf{Parâmetros de entrada :}
+\begin{enumerate}
+\item[•]{int posicaoNaLinha}
+\item[•]{int margemDireita}
+\item[•]{int margemEsquerda}
+\item[•]{int largura}
+\item[•]{float limiteDasMargens}
+\end{enumerate}
+
+
+\textbf{Saída:} Um valor real aleatório no intervalo $[0,1]$ para pontos próximos da margem e $[1,2]$ para pontos afastados.\\
+
+\textbf{Descrição:} A fun\c{c}ão verifica quanto o ponto analisado dista da margem, atribuindo um valor real dependendo da resposta.
+
+(float *linha, int largura, int fluxoDesejado) {
+
+\subsection{normaliza}
+\textbf{Parâmetros de entrada:}
+\begin{enumerate}
+\item[•]{float *linha}
+\item[•]{int largura}
+\item[•]{int fluxoDesejado}
+\end{enumerate}
+
+
+\textbf{Saída:} Um conjunto de valores normalizados no fluxo desejado.\\
+
+\textbf{Descrição:} A fun\c{c}ão normaliza o valor de cada ponto utilizando a seguinte rela\c{c}ão matemática:
+
+\begin{equation}
+\phi = \sum_{i=0}^{N} v_i
+\end{equation}
+\begin{equation}
+v_i \leftarrow v_i\cdot\dfrac{\Phi}{\phi}
+\end{equation}
+
+onde $\Phi$ é o fluxo inserido pelo usuário.
+
+
+\end{document}
