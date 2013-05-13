@@ -7,7 +7,7 @@
 #include "grade.h"
 #include "util.h"
 
-#define velocidadeDoBarcoInicial 10
+#define velocidadeDoBarcoInicial 1
 #define larguraDoRioInicial 100
 #define fluxoDesejadoInicial 50
 #define alturaDaGrade 30
@@ -23,7 +23,7 @@ int main (int argc, char *argv[]) {
      Declaração de variáveis
      */
 
-    int velocidadeDoBarco = velocidadeDoBarcoInicial;
+    float velocidadeDoBarco = velocidadeDoBarcoInicial;
     int larguraDoRio = larguraDoRioInicial;
     int fluxoDesejado = fluxoDesejadoInicial;
     int dIlha = distanciaEntreIlhasInicial;
@@ -38,13 +38,6 @@ int main (int argc, char *argv[]) {
     float **grade;
     
     /*
-     Inicialização
-     */
-    
-    tim.tv_sec  = 0;
-    tim.tv_nsec = 100000000L;
-    
-    /*
      Leitura de parametros
      */
     
@@ -52,7 +45,7 @@ int main (int argc, char *argv[]) {
     
     if (verbose) {
         printf ("\t \t Opcoes disponiveis: \n"
-            "-b = %d  - Velocidade do barco\n"
+            "-b = %f  - Velocidade do barco\n"
             "-l = %d  - Largura do Rio\n"
             "-s = %d  - semente para o gerador aleatorio\n"
             "-f = %d  - Fluxo da agua\n"
@@ -62,6 +55,13 @@ int main (int argc, char *argv[]) {
             "Pressione Enter para continuar...\n", velocidadeDoBarco, larguraDoRio, seed, fluxoDesejado, verbose, pIlha, dIlha);
         getchar();
     }
+    
+    /*
+     Inicialização
+     */
+    
+    tim.tv_sec  = 0;
+    tim.tv_nsec = 100000000/velocidadeDoBarco;
     
     /*
      Seed

@@ -3,13 +3,11 @@
 #include <string.h>
 #include "util.h"
 
-int getArgs(int argc,char *argv[],int *velocidadeDoBarco, int *larguraDoRio, int *seed, int *fluxoDesejado, 
-	     int *verbose, int *dIlha, float *pIlha)
-{
+int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, int *seed, int *fluxoDesejado, int *verbose, int *dIlha, float *pIlha) {
   int read = 0;
   
   while(--argc){
-    if (sscanf(argv[argc], "-b%d", velocidadeDoBarco)) read++;
+    if (sscanf(argv[argc], "-b%f", velocidadeDoBarco)) read++;
     else if (sscanf(argv[argc], "-l%d", larguraDoRio)) read++;
     else if (sscanf(argv[argc], "-s%d", seed)) read++;
     else if (sscanf(argv[argc], "-f%d", fluxoDesejado)) read++;
