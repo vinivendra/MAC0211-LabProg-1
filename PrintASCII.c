@@ -8,25 +8,10 @@
 #define charAgua  "."
 
 /*
- Protótipos
- */
-
-void outputLine (float *linha, int largura);
-void outputArray (float **array, int altura, int largura, int indice);
-
-/*
  Funções
  */
 
-void outputArray (float **array, int altura, int largura, int indice) { /* Imprime a grade */
-    int i;
-    
-    for (i = 0; i < altura; i ++) /* Imprime cada linha, de trás para frente */
-        outputLine(array[(i+indice)%altura], largura);
-}
-
-
-void outputLine (float *linha, int largura) { /* Imprime a linha */
+static void outputLine (float *linha, int largura) { /* Imprime a linha */
     int i = 0;
     
     for (i = 0; i < largura; i++) {
@@ -38,3 +23,14 @@ void outputLine (float *linha, int largura) { /* Imprime a linha */
     
     printf("\n");
 }
+
+
+void outputArray (float **array, int altura, int largura, int indice) { /* Imprime a grade */
+    int i;
+    
+    for (i = 0; i < altura; i ++) /* Imprime cada linha, de trás para frente */
+        outputLine(array[(i+indice)%altura], largura);
+}
+
+
+
