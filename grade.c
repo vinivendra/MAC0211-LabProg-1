@@ -20,14 +20,15 @@ pixel **initGrade(int altura, int largura) {    /* Malloca espaço para a grade 
 }
 
 void criaPrimeiroFrame(pixel **grade, int altura, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) {
-    /* Popula a grade com os números do primeiro frame */
+  /* Popula a grade com os números do primeiro frame */
+  /*A primeira linha a ser gerada e' a ultima linha da matriz, que e' entao passada com "seed" para geracao das demais */
     
     int i = 1;
     
-    primeiraLinha(grade[0], largura, limiteDasMargens, fluxoDesejado, distanciaEntreIlhas, probIlha);      /* Popula a primeira linha; as outras serão criadas em cima dela */
+    primeiraLinha(grade[altura-1], largura, limiteDasMargens, fluxoDesejado, distanciaEntreIlhas, probIlha);      /* Popula a primeira linha; as outras serão criadas em cima dela */
     
-    for (i = 1; i < altura; i++)
-        proximaLinha (grade[i-1], grade[i], largura, limiteDasMargens, fluxoDesejado, distanciaEntreIlhas, probIlha);   /* Popula as próximas linhas, com base na 1a */
+    for (i = altura-2; i >= 0; i--)
+        proximaLinha (grade[i+1], grade[i], largura, limiteDasMargens, fluxoDesejado, distanciaEntreIlhas, probIlha);   /* Popula as próximas linhas, com base na 1a */
 }
 
 
