@@ -5,10 +5,18 @@
 #include <stdlib.h>
 #include "pixel.h"
 
+/*
+ Defines
+*/
+
 #define TERRA '#'
 #define AGUA '.'
 
-void primeiraLinha(pixel* linha, int largura, float limiteDasMargens, int fluxoDesejado);
+/*
+ Protótipos
+*/
+
+void primeiraLinha(pixel* linha, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha);
 void aleatorizaMargem(pixel* linhaAnterior, pixel *linha, float limiteDasMargens, int largura);
 void proximaLinha (pixel* linhaAnterior, pixel *linha, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha);
 

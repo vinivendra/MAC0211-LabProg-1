@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include "pixel.h"
 
+/*
+ Implementações
+    Setters e getters
+*/
+
 float velocidade(pixel *p){
   return p->velocidade;
 }

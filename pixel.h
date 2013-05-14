@@ -4,10 +4,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+ Structs
+ */
+
 typedef struct pixel{
-  float velocidade;
-  char tipo;
-}pixel;
+    float velocidade;
+    char tipo;
+} pixel;
+
+/*
+ Protótipos
+ */
 
 float velocidade(pixel*);
 char tipo(pixel*);

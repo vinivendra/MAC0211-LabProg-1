@@ -9,5 +9,9 @@
  padrão, seja numa janela separada em cores.
 */
 
+/*
+ Protótipos
+*/
+
 void outputArray (pixel **array, int altura, int largura, int indice);
 void outputLine (pixel *linha, int largura);
