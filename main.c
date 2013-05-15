@@ -14,10 +14,7 @@
 #define alturaDaGrade 30
 #define distanciaEntreIlhasInicial 10
 #define probabilidadeDeObstaculosInicial 0.5
-
-#define limiteDasMargens 0.2
-
-#warning permitir que se passe o limite das margens como parametro
+#define limiteDasMargens 0.9
 
 int main (int argc, char *argv[]) {
     
@@ -30,11 +27,12 @@ int main (int argc, char *argv[]) {
     int fluxoDesejado = fluxoDesejadoInicial;
     int dIlha = distanciaEntreIlhasInicial;
     float pIlha = probabilidadeDeObstaculosInicial;
+    float limiteMargens = limiteDasMargens;
     
     struct timespec tim2;
     struct timespec tim;
     
-    int seed = 0;
+    int seed = 1;
     int verbose = 0;
     int indice = 0;
     pixel **grade;
@@ -43,18 +41,22 @@ int main (int argc, char *argv[]) {
      Leitura de parametros
      */
     
-    getArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha);
+    getArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha, &limiteMargens);
+    /*corrigeArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha, &limiteMargens);*/
+
+    
     
     if (verbose) {
         printf ("\t \t Opcoes disponiveis: \n"
                 "-b = %f  - Velocidade do barco\n"
                 "-l = %d  - Largura do Rio\n"
-                "-s = %d  - semente para o gerador aleatorio\n"
+                "-s = %d  - Semente para o gerador aleatorio\n"
                 "-f = %d  - Fluxo da agua\n"
                 "-v = %d  - Verbose\n"
                 "-pI = %f - Probabilidade de haver obstaculos\n"
                 "-dI = %d - Distancia minima entre obstaculos\n"
-                "Pressione Enter para continuar...\n", velocidadeDoBarco, larguraDoRio, seed, fluxoDesejado, verbose, pIlha, dIlha);
+                "-lM = %f - Limite de tamanho das margens (de 0 a 1)\n"
+                "Pressione Enter para continuar...\n", velocidadeDoBarco, larguraDoRio, seed, fluxoDesejado, verbose, pIlha, dIlha, limiteMargens);
         getchar();
     }
     
@@ -80,7 +82,7 @@ int main (int argc, char *argv[]) {
     
     grade = initGrade(alturaDaGrade, larguraDoRio);
     
-    criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, dIlha, pIlha);
+    criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteMargens, fluxoDesejado, dIlha, pIlha);
     
     outputArray(grade, alturaDaGrade, larguraDoRio, indice);
     
@@ -93,7 +95,7 @@ int main (int argc, char *argv[]) {
     for(;;){
         indice = (indice - 1+alturaDaGrade) % alturaDaGrade;
         
-        criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteDasMargens, fluxoDesejado, indice, dIlha, pIlha);
+        criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteMargens, fluxoDesejado, indice, dIlha, pIlha);
         
         outputArray(grade, alturaDaGrade, larguraDoRio, indice);
 

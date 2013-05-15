@@ -18,11 +18,9 @@ static int  distanciaAtualEntreIlhas = 0;
  */
 
 float velocidadeDaAguaPrimeiraLinha (float velocidadePontoAnterior);
-int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens);
+int tamanhoDaPrimeiraMargem(int largura, float limiteMargens);
 void normaliza(pixel *linha, int largura, int fluxoDesejado);
-int margemEsquerda (pixel *linha);
-int margemDireita (pixel *linha, int largura);
-void aleatorizaMargem(pixel *linhaAnterior, pixel *linha, float limiteDasMargens, int largura);
+void aleatorizaMargem(pixel *linhaAnterior, pixel *linha, float limiteMargens, int largura);
 int insereIlha(pixel *linha, int distanciaMinimaEntreIlhas, float probIlha, int margemEsquerda, int margemDireita, int largura);
 void velocidadeProximaLinha (pixel *linha, pixel *linhaAnterior, int fluxoDesejado, int largura);
 void suavizaVelocidades (pixel *linha, int largura);
@@ -31,13 +29,13 @@ void suavizaVelocidades (pixel *linha, int largura);
  Implementações
  */
 
-void proximaLinha (pixel *linhaAnterior, pixel *linha, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) {
+void proximaLinha (pixel *linhaAnterior, pixel *linha, int largura, float limiteMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) {
     /* Calcula como deve ser a nova linha do frame */
     
     int tamanhoDaMargemEsquerda;
     int tamanhoDaMargemDireita;
     
-    aleatorizaMargem(linhaAnterior, linha, limiteDasMargens, largura);  /* Insere as novas margens aleatorizadas */
+    aleatorizaMargem(linhaAnterior, linha, limiteMargens, largura);  /* Insere as novas margens aleatorizadas */
     
     tamanhoDaMargemEsquerda = margemEsquerda(linha);
     tamanhoDaMargemDireita = margemDireita(linha, largura);
@@ -71,11 +69,11 @@ int margemDireita (pixel *linha, int largura) {     /* Retorna o tamanho da marg
     return largura-n;
 }
 
-void primeiraLinha(pixel *linha, int largura, float limiteDasMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) {
+void primeiraLinha(pixel *linha, int largura, float limiteMargens, int fluxoDesejado, int distanciaEntreIlhas, float probIlha) {
     /* Insere os valores da primeira linha do programa */
     
-    int tamanhoDaMargemEsquerda = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
-    int tamanhoDaMargemDireita = tamanhoDaPrimeiraMargem(largura, limiteDasMargens);
+    int tamanhoDaMargemEsquerda = tamanhoDaPrimeiraMargem(largura, limiteMargens);
+    int tamanhoDaMargemDireita = tamanhoDaPrimeiraMargem(largura, limiteMargens);
     
     int i = 0;
     float v;
@@ -103,15 +101,14 @@ void primeiraLinha(pixel *linha, int largura, float limiteDasMargens, int fluxoD
         }
     }
     
-    suavizaVelocidades(linha, largura)void suavizaVelocidades (pixel *linha, int largura) {
-;
+    suavizaVelocidades(linha, largura);
     
     /* Consideramos a probabilidade de a primeira linha ter ilhas */
     normaliza(linha, largura, fluxoDesejado);
 }
 
-int tamanhoDaPrimeiraMargem(int largura, float limiteDasMargens) {  /* Calcula um valor aleatório para o tamanho das margens da primeira linha */
-    int resultado = (limiteDasMargens*largura - 1)*rand()/RAND_MAX + 1;     /* Valor entre 1 e o limite das margens */
+int tamanhoDaPrimeiraMargem(int largura, float limiteMargens) {  /* Calcula um valor aleatório para o tamanho das margens da primeira linha */
+    int resultado = (limiteMargens*largura - 1)*rand()/RAND_MAX + 1;     /* Valor entre 1 e o limite das margens */
     
     return resultado;
 }
@@ -203,7 +200,7 @@ void normaliza(pixel *linha, int largura, int fluxoDesejado) {  /* Normaliza a l
     }
 }
 
-void aleatorizaMargem(pixel *linhaAnterior, pixel *linha, float limiteDasMargens, int largura){
+void aleatorizaMargem(pixel *linhaAnterior, pixel *linha, float limiteMargens, int largura){
     /* Calcula o novo tamanho das margens, baseado na linha anterior */
     
     int tamanhoDaMargemEsquerda = margemEsquerda(linhaAnterior);
@@ -216,9 +213,10 @@ void aleatorizaMargem(pixel *linhaAnterior, pixel *linha, float limiteDasMargens
     tamanhoDaMargemDireita = tamanhoDaMargemDireita + variacaoDireita;
     
     if (tamanhoDaMargemEsquerda <= 0) tamanhoDaMargemEsquerda = 1;  /* Evita que as novas margens sejam 0 ou passem do limite */
-    else if (tamanhoDaMargemEsquerda > limiteDasMargens * largura) tamanhoDaMargemEsquerda = limiteDasMargens * largura;
+    else if (tamanhoDaMargemEsquerda > limiteMargens * largura || tamanhoDaMargemEsquerda >= largura - tamanhoDaMargemDireita - 10) tamanhoDaMargemEsquerda = margemEsquerda(linhaAnterior);
+    
     if (tamanhoDaMargemDireita <= 0) tamanhoDaMargemDireita = 1;
-    else if (tamanhoDaMargemDireita > limiteDasMargens * largura) tamanhoDaMargemDireita = limiteDasMargens * largura;
+    else if (tamanhoDaMargemDireita > limiteMargens * largura || tamanhoDaMargemDireita >= largura - tamanhoDaMargemEsquerda - 10) tamanhoDaMargemDireita = margemDireita(linhaAnterior, largura);
     
     for (i = 0; i < tamanhoDaMargemEsquerda; i++){  /* Insere nova margem esquerda */
         setaTipo(&linha[i], TERRA);

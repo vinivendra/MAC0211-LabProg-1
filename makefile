@@ -1,12 +1,12 @@
 execName = ep2
 execOptions =  -g -o $(execName) -lm -lc
 objOptions = -g -pedantic -Wall -lm -lc
-objects = main.o PrintASCII.o grade.o rio.o util.o pixel.o
+objectsASCII = main.o PrintASCII.o grade.o rio.o util.o pixel.o rotinasTeste.o
 
 
 .PHONY:ascii
-ascii: $(objects)
-	gcc $(objects) $(execOptions)
+ascii: $(objectsASCII)
+	gcc $(objectsASCII) $(execOptions)
 
 main.o: main.c
 	gcc -c main.c $(objOptions)
@@ -25,6 +25,9 @@ util.o: util.c
 
 pixel.o: pixel.c
 	gcc -c pixel.c $(objOptions)
+    
+rotinasTeste.o: rotinasTeste.c
+	gcc -c rotinasTeste.c $(objOptions)
 
 clean:
 	rm -f *.o $(execName)
