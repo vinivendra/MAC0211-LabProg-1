@@ -7,7 +7,7 @@
  Implementações
 */
 
-int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, int *seed, int *fluxoDesejado, int *verbose, int *dIlha, float *pIlha) {
+int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, int *seed, int *fluxoDesejado, int *verbose, int *dIlha, float *pIlha, float *limiteMargens) {
   int read = 0;
   
   while(--argc){
@@ -18,6 +18,7 @@ int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, i
     else if (sscanf(argv[argc], "-pI%f", pIlha)) read++;
     else if (sscanf(argv[argc], "-dI%d", dIlha)) read++;
     else if (strcmp(argv[argc],"-v") == 0) *verbose = 1;
+    else if (sscanf(argv[argc], "-lM%f", limiteMargens)) read++;
       
     else {
       printf ("\t \t Opcoes disponiveis: \n"

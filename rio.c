@@ -103,8 +103,7 @@ void primeiraLinha(pixel *linha, int largura, float limiteDasMargens, int fluxoD
         }
     }
     
-    suavizaVelocidades(linha, largura)void suavizaVelocidades (pixel *linha, int largura) {
-;
+    suavizaVelocidades(linha, largura);
     
     /* Consideramos a probabilidade de a primeira linha ter ilhas */
     normaliza(linha, largura, fluxoDesejado);
