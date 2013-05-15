@@ -50,7 +50,7 @@ void calculaVariacoes(pixel **grade, int largura, int altura,
       if (velAux > *velMax) *velMax = velAux;
       if (velAux < *velMin) *velMin = velAux;
 
-      if (tipo(&grade[i][j] == AGUA)
+      if (tipo(&grade[i][j]) == AGUA)
 	  *velMedia += velAux/largura*altura;
 
     }

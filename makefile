@@ -26,5 +26,11 @@ util.o: util.c
 pixel.o: pixel.c
 	gcc -c pixel.c $(objOptions)
 
+teste:
+	gcc -Wall -pedantic -g rotinasTeste.o  grade.o rio.o util.o pixel.o teste.c -o teste -lm -lc
+
+rotinasTeste.o: rotinasTeste.c
+	gcc -c rotinasTeste.c $(objOptions)
+
 clean:
 	rm -f *.o $(execName)
