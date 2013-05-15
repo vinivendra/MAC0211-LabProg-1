@@ -1,0 +1,164 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[brazil]{babel}
+\usepackage{listings}
+\lstset{language=C}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\PassOptionsToPackage{usenames,dvipsnames,svgnames}{xcolor}  
+\usetikzlibrary{arrows,positioning,automata}
+\begin{document}
+
+\begin{center}{\Large \bf Documenta\c{c}ão EP2 Canoagem \\ }\end{center}
+\begin{center}{\Large \bf Manual do Desenvolvedor\\ }\end{center}
+
+\begin{center}
+{
+Fellipe Souto Sampaio\footnote{e-mail: fellipe.sampaio@usp.com}
+Gervásio Santos \footnote{foo}
+Vinícius Verdamini \footnote{foo2}
+}
+
+\end{center}
+
+\begin{center}
+MAC 0211 Laboratório de Programa\c{c}ão I \\
+Prof. Kelly Rosa Braghetto \\
+             
+\end{center}
+
+\begin{center}
+Instituto de Matemática e Estatística - IME USP \\
+ Rua do Matão 1010 \\
+ 05311-970\, Cidade Universitária, São Paulo - SP \\
+\end{center}
+
+\newpage
+
+\section{Introdu\c{c}ão}
+Esta documenta\c{c}ão apresenta uma completa descri\c{c}ão do funcionamento do exercício programa 2-A e seus algoritmos, divido através de sua implementa\c{c}ão nos .c e .h .
+
+\section{Pixel}
+Para modelar o funcionamento da grade decidiu-se implementar um matriz de tipo pixel. Nesta estrura existe dois campos, \textit{velocidade} e \textit{tipo} que guardam a velocidade e o tipo do ponto respectivamente. Para lidar com estar estrutura foi implemetado as seguinte fun\c{c}ões:
+\begin{enumerate}
+\item[•]{velocidade - Retorna a velocidade de um ponto.}
+\item[•]{tipo - Retorna o tipo de um ponto.} 
+\item[•]{setaVelocidade - Muda a velocidade do ponto para o valor fornecido.} 
+\item[•]{setaTipo - Muda a natureza do ponto para o tipo fornecido.} 
+
+\end{enumerate}
+
+
+\section{Rio}
+Esta interface lida com toda opera\c{c}ão dos pontos, desde a gera\c{c}ão das margens, ilhas, velocidade da água entre outras. Temos duas fun\c{c} principais, primeiraLinha e proximaLinha, as quais estão disponíveis para outras interfaces. Seus métodos internos são chamados para constru\c{c}ão das linhas, cada qual exercendo uma funcionalidade própria. O fluxo de funcionamento das duas fun\c{c} está descrito nos anexos 1 e 2 respectivamente, onde cada vértice representa um método aplicado, o valor das aretas é a ordem em que são chamadas e por fim a orienta\c{c}ão do grafo informa o fluxo de informa\c{c}ões trocadas entre a fun\c{c} chamadora e a chamada.\\
+
+\subsection{primeiraLinha}
+Esta fun\c{c}ão tem a funcionalidade de criar a primeira linha da grade, que servirá como linha base para linhas subsequentes. Chama-se o método \textit{tamanhoDaPrimeiraMargem} para definir o tamaho das margens esquerda e direita, este método trabalha com a macro limiteDasMargens definida em main.c . Após utilizar os métodos descritos em pixel para organizar o tipo do ponto e sua velocidade chama-se \textit{velocidadeDaAguaPrimeiraLinha**} que atribui uma velocidade randômica dentro do intervalo $[-0.5,0.5]$ para o primeiro ponto com água fora da margem, para os pontos seguintes repete-se o passo da forma descrita na equa\c{c}ão a seguir:
+
+\begin{equation}
+v_i = v_{i-1} + \lambda \textbf{\, , } \lambda \in [-0.5,0.5]
+\end{equation}
+
+Após inserir as devidas velocidades o método \textit{insereIlha} tem o trabalho de inserir um obstáculo na por\c{c}ão central do rio de acordo com a proba-bilidade inserida pelo usuário. Um valor default definido em main.c é atribuido a probabilidade a distância mínima entre ilhas caso o usuário não fa\c{c}a a inser\c{c}ão destes valores. Inteiros aleatórios são gerados para simular a probabilidade P de existir ilhas ou não, seu tamanho está dentro dos limites da terceira por\c{c}ão da grade. Com intuito de evitar o encontro de uma das margens com uma dada ilha é considerado que \textbf{a distância mínima entre os dois deve ser de 2 pontos}. Ao fim de todos estes passos, de gera\c{c}ão à inser\c{c}ão, é necessário ajustar o fluxo da água na linha. Primeiro suave-se a velocidade dos pontos	 para que a diferen\c{c}a entre eles não seja tão discrepante, isto é feito em \textit{suavizaVelocidade}, e então a velocidade dos pontos é normalizada com o uso da formula de interpola\c{c}ão: 
+
+\begin{equation}
+\phi = \sum_{i=0}^{N} v_i
+\end{equation}
+\begin{equation}
+v_i \leftarrow v_i\cdot\dfrac{\Phi}{\phi}
+\end{equation}
+\\
+onde $\Phi$ é o fluxo inserido pelo usuário.
+
+\subsection{proximaLinha}
+
+A gera\c{c}ão das linhas subsequentes funciona de modo semelhante a fun\c{c}ão primeiraLinha. Cada nova linha utiliza a anterior como base para sua cria\c{c}ão. As diferen\c{c}as residem nos métodos que lidam com as margens e com a velocidade das linhas. O método \textit{aleatorizaMargem} analisa as margens anteriores e sorteia um valor inteiro no intervalo $[-1,1]$. Este valor é somado as margens da linha anterior e atribuindo-se à nova, respeitando sempre o limite das margens, isso garante que a mudan\c{c}a entre a margem anterior e atual seja suave. Para gera\c{c}ão de velocidades na nova linha o método \textit{velocidadeProximaLinha} é empregado. Com intuito de preservar a suavidade da velocidade entre pontos é tomado como base a velocidade do ponto anterior e realizado o produto desta com um valor aleatório real no interválo $[0.9,1.1]$, e no caso do ponto anterior ter velocidade zero, realiza-se um outro cálculo.
+
+\section{Grade}
+Esta interface concentra o método de cria\c{c}ão da matriz e dos frames utilizados durante o programa. O método \textit{initGrade} aloca dinamicamente uma matriz de tamanho $altura \times largura$, as quais tem valor default de 30 por 100 respetivamente. Em \textit{criaPrimeiroFrame} cria-se a primeira imagem que será impressa, a constru\c{c}ão das linhas acontece de baixo para cima, indo da ultima linha da matriz até a primeira. A mesma ideia é utilizada em \textit{criaProximoFrame}, entretanto nesta é criada apenas uma nova linha e inserida na posi\c{c}ão $(indice + alturaDaGrade -1)\text{ \, } mod \text{ \, } alturaDaGrade$ . Um método de desaloca\c{c}ão de memória, \textit{freeGrade}, foi implementado para situa\c{c}ões futuras nas quais a execu\c{c}ão do programa não seja interrompida pelo comando CTRL+C.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\begin{center}
+\textbf{\text{\Large  Anexo 1 - Fluxo de funcionamento primeiraLinha}}
+\begin{tikzpicture}[>=stealth',shorten >=1pt,node distance=3cm,on grid,initial/.style    ={}]
+  \node[state]          (P)                        {$pL$};
+  \node[state]          (B) [ above =of P]    {$tPM$};
+  \node[state]          (M) [above right =of P]    {$velAPL$};
+  \node[state]          (D) [right =of P]    {$iIlha	$};
+  \node[state]          (C) [below right =of P]    {$nLz$};
+\tikzset{mystyle/.style={<->,double=orange}} 
+\tikzset{every node/.style={fill=white}} 
+\path (P)     edge [mystyle]    node   {$1$} (B)
+      (P)     edge [mystyle]    node   {$2$} (M) 
+      (P)     edge [mystyle]    node   {$3$} (D)
+      (P)     edge [mystyle]    node   {$4$} (C);
+
+\textbf{\text{ primeiraLinha - Legenda }}
+\end{tikzpicture}
+\end{center}
+\textbf{\text{  primeimaLinha - Legenda }}
+\begin{enumerate}
+\item[-]{pL - primeiraLinha}
+\item[-]{tPM - tamanhoDaPrimeiraMargem}
+\item[-]{velAPL - velocidadeDaAguaPrimeiraLinha}
+\item[-]{iIlha - InsereIlha}
+\item[-]{nLz - normaliza}
+\end{enumerate}
+
+
+\newpage
+\begin{center}
+\textbf{\text{\Large  Anexo 2 - Fluxo de funcionamento proximaLinha}}
+\begin{tikzpicture}[>=stealth',shorten >=1pt,node distance=3cm,on grid,initial/.style    ={}]
+  \node[state]          (P)                        {$pxL$};
+  \node[state]          (B) [ above =of P]    {$aleM$};
+  \node[state]          (C) [right =of B]    {$marD$};
+    \node[state]          (M) [above right =of C]    {$marE$};
+  \node[state]          (F) [above left   =of P]    {$iIlha$};
+  \node[state]          (G) [right =of P]    {$velpxL$};
+  \node[state]          (R) [below =of G]    {$rRand$};
+  \node[state]          (H) [below left =of P]    {$nLz$};
+\tikzset{mystyle/.style={<->,double=orange}} 
+\tikzset{every node/.style={fill=white}} 
+\path (P)     edge [mystyle]    node   {$1$} (B)
+      (B)     edge [mystyle]    node   {$2$} (M)
+      (B)     edge [mystyle]    node   {$3$} (C)  
+      (P)     edge [mystyle]    node   {$4$} (F)
+      (P)     edge [mystyle]    node   {$5$} (G)
+      (G)     edge [mystyle]    node   {$6$} (M)
+      (G)     edge [mystyle]    node   {$7$} (C)
+      (G)     edge [mystyle]    node   {$8$} (R)
+      (P)     edge [mystyle]    node   {$9$} (H);
+\end{tikzpicture}
+\end{center}
+\textbf{\text{  proximaLinha - Legenda }}
+\begin{enumerate}
+\item[-]{pxL - proximaLinha}
+\item[-]{aleM - aleatorizaMargem}
+\item[-]{marE - margemEsquerda}
+\item[-]{marD - margemDireita}
+\item[-]{iIlha - InsereIlha}
+\item[-]{velpxL - velocidadeProximaLinha}
+\item[-]{rRand - realRandomico}
+\item[-]{nLz - normaliza}
+\end{enumerate}
+
+\end{document}
