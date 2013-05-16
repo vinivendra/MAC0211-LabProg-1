@@ -27,6 +27,7 @@ int main(int argc, char* argv[]){
   int alturaDaGrade = 30;
   int verbose = 0;
   int seed = time(NULL);
+  int linhasCorretas = 0;
 
   getArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado,
 	  &verbose, &dIlha, &pIlha, &limiteMargens);
@@ -52,41 +53,40 @@ int main(int argc, char* argv[]){
   
   criaPrimeiroFrame(grade, alturaDaGrade, larguraDoRio, limiteMargens, fluxoDesejado, dIlha, pIlha);
     
-  calculaVariacoes(grade, larguraDoRio, alturaDaGrade,
-		   &velMin, &velMedia,&velMax,
-		   &margEsqMin,&margEsqMedia,&margEsqMax,
-		   &margDirMin,&margDirMedia,&margDirMax);
+  linhasCorretas += calculaVariacoes(grade, larguraDoRio, alturaDaGrade, fluxoDesejado,
+				     &velMin, &velMedia,&velMax,
+				     &margEsqMin,&margEsqMedia,&margEsqMax,
+				     &margDirMin,&margDirMedia,&margDirMax);
 
   for(j = 0; j < 49; j++){
     indice = (indice - 1+alturaDaGrade) % alturaDaGrade;
     
     criaProximoFrame(grade, alturaDaGrade, larguraDoRio, limiteMargens, fluxoDesejado, indice, dIlha, pIlha);
     
-    calculaVariacoes(grade, larguraDoRio, alturaDaGrade,
-		     &velMin, &velMedia,&velMax,
-		     &margEsqMin,&margEsqMedia,&margEsqMax,
-		     &margDirMin,&margDirMedia,&margDirMax);
+    linhasCorretas += calculaVariacoes(grade, larguraDoRio, alturaDaGrade, fluxoDesejado,
+				       &velMin, &velMedia, &velMax,
+				       &margEsqMin, &margEsqMedia, &margEsqMax,
+				       &margDirMin, &margDirMedia, &margDirMax);
     
   }
 
   margDirMedia /= 50;
   margEsqMedia /= 50;
-  velMedia /= 50;
-  
-  printf("\n\nPara uma largura de %d, com fluxo Desejado %d, probabilidade de ilha %f e uma distancia minima entre "
+  velMedia /= 50*(larguraDoRio)*(alturaDaGrade);
+
+  printf("\n\nPara uma largura de %d, com fluxo Desejado %d, prob. de ilha %f e uma dist. minima entre "
 	 " ilhas de %d, em um grid de altura %d, cada margem  ocupando no maximo %f do grid temos:\n\n"
+	 "Houve %d linhas com fluxo correto.\n\n"
 	 "Velocidade Maxima = %f\nVelocidade Minima = %f\nVelocidade Media = %f\n\n"
 	 "Comprimento maximo da margem direita = %d\nComprimento minimo da margem direita = %d\nComprimento medio da margem direita = %f\n\n"
 	 "Comprimento maximo da margem esquerda = %d\nComprimento minimo da margem esquerda = %d\nComprimento medio da margem esquerda = %f\n\n",
-	 larguraDoRio, fluxoDesejado, pIlha, dIlha, alturaDaGrade, limiteMargens, velMax, velMin, velMedia, margDirMax, margDirMin, margDirMedia,
+	 larguraDoRio, fluxoDesejado, pIlha, dIlha, alturaDaGrade, limiteMargens, linhasCorretas, velMax, velMin, velMedia, margDirMax, margDirMin, margDirMedia,
 	 margEsqMax, margEsqMin, margEsqMedia);
   
   velMin = 100000000; velMedia = 0; velMax = 0;
   margEsqMin = 10000000; margEsqMedia = 0; margEsqMax = 0;
   margDirMin = 10000000; margDirMedia = 0; margDirMax = 0;
   
-  freeGrade(grade, alturaDaGrade, larguraDoRio);
-  grade = NULL;
-  
+    
   return 0;
 }
