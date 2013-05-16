@@ -8,6 +8,10 @@
 #include "pixel.h"
 
 int testaCorrecao(pixel*, int, int);
-void calculaVariacoes(pixel **grade, int largura, int altura, float *velMin, float *velMedia, float *velMax, int *margEsqMin, float *margEsqMedia, int* margEsqMax, int *margDirMin, float *margDirMedia, int *margDirMax);
+int calculaVariacoes(pixel **grade, int largura, int altura, int fluxoDesejado,
+		      float *velMin, float *velMedia, float *velMax,
+		      int *margEsqMin, float *margEsqMedia, int* margEsqMax,
+		      int *margDirMin, float *margDirMedia, int *margDirMax);
+
 
 #endif

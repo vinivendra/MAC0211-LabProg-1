@@ -16,6 +16,8 @@
 #define probabilidadeDeObstaculosInicial 0.5
 #define limiteDasMargens 0.9
 
+#define limiteDasMargens 0.2
+
 int main (int argc, char *argv[]) {
     
     /*
