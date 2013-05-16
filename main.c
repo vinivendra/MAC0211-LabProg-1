@@ -29,7 +29,7 @@ int main (int argc, char *argv[]) {
     float pIlha = probabilidadeDeObstaculosInicial;
     float limiteMargens = limiteDasMargens;
     
-    struct timespec tim2;
+    struct timespec tim2; 
     struct timespec tim;
     
     int seed = 1;
