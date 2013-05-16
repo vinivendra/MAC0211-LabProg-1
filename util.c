@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "util.h"
+#define maxCaracter 30
 
 /*
  Implementações
@@ -9,6 +10,7 @@
 
 int getArgs (int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, int *seed, int *fluxoDesejado, int *verbose, int *dIlha, float *pIlha, float *limiteMargens) {
   int read = 0;
+  char decision, input[maxCaracter];
   
   while(--argc){
     if (sscanf(argv[argc], "-b%f", velocidadeDoBarco)) read++;

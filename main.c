@@ -59,6 +59,7 @@ int main (int argc, char *argv[]) {
                 "Pressione Enter para continuar...\n", velocidadeDoBarco, larguraDoRio, seed, fluxoDesejado, verbose, pIlha, dIlha, limiteMargens);
         getchar();
     }
+    limiteMargens = limiteDasMargens;
     
     /*
      Inicialização

@@ -1,3 +1,6 @@
+#ifndef H_UTIL_DEFINE
+#define H_UTIL_DEFINE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

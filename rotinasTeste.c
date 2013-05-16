@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "pixel.h"
 #include "rio.h"
 #include "grade.h"
