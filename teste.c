@@ -72,7 +72,7 @@ int main(int argc, char* argv[]){
 
   margDirMedia /= 50;
   margEsqMedia /= 50;
-  velMedia /= 50*(larguraDoRio)*(alturaDaGrade);
+  velMedia /= 50;
 
   printf("\n\nPara uma largura de %d, com fluxo Desejado %d, prob. de ilha %f e uma dist. minima entre "
 	 " ilhas de %d, em um grid de altura %d, cada margem  ocupando no maximo %f do grid temos:\n\n"
