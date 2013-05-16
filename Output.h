@@ -1,3 +1,6 @@
+#ifndef H_OUTPUT_DEFINE
+#define H_OUTPUT_DEFINE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -15,3 +18,5 @@
 
 void outputArray (pixel **array, int altura, int largura, int indice);
 void outputLine (pixel *linha, int largura);
+
+#endif
