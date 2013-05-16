@@ -22,7 +22,7 @@ int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, i
     int read = 0;
     char decision, input[maxCaracter];
     
-    while(--argc){
+    while(--argc){ /* Le todos os parâmetros */
         if (sscanf(argv[argc], "-b%f", velocidadeDoBarco)) read++;
         else if (sscanf(argv[argc], "-l%d", larguraDoRio)) read++;
         else if (sscanf(argv[argc], "-s%d", seed)) read++;
@@ -31,23 +31,27 @@ int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, i
         else if (sscanf(argv[argc], "-dI%d", dIlha)) read++;
         else if (sscanf(argv[argc], "-lM%f", limiteMargens)) read++;
         else if (strcmp(argv[argc],"-v") == 0) *verbose = 1;
-        else {
-            printf ("\t \t Opcoes disponiveis: \n"
-                    "-b  - Velocidade do barco\n"
-                    "-l  - Largura do Rio\n"
-                    "-s  - semente para o gerador aleatorio\n"
-                    "-f  - Fluxo da agua\n"
-                    "-pI - Probabilidade de haver obstaculos\n"
-                    "-dI - Distancia minima entre obstaculos\n"
-                    "-lM - Limite das margens\n"
-                    "-v  - Verbose\n"
-                    "Voce gostaria de entrar novamente com os parametros? \n"
+        
+        else { /* Caso o usuário tenha passado um parâmetro que não é aceito, mostramos o que ele pode passar */
+            printf ("\nOpcoes disponiveis: \n"
+                    "\t-b  - Velocidade do barco\n"
+                    "\t-l  - Largura do Rio\n"
+                    "\t-s  - semente para o gerador aleatorio\n"
+                    "\t-f  - Fluxo da agua\n"
+                    "\t-pI - Probabilidade de haver obstaculos\n"
+                    "\t-dI - Distancia minima entre obstaculos\n"
+                    "\t-lM - Limite das margens\n"
+                    "\t-v  - Verbose\n\n"
+                    "Você passou um parâmetro errado. "
+                    "Gostaria de entrar novamente com os parâmetros? \n"
                     "S - Sim \t\t outro caracter - Nao\n");
-            scanf ("%c",&decision);
+            
+            scanf ("%c",&decision); /* Pega a decisão */
             clear_newlines();
-            if(decision == 'S' || decision == 's'){
+            
+            if(decision == 'S' || decision == 's'){ /* Se ele quer entrar os parâmetros, repetimos até que ele saia (-q) */
                 while (1){
-                    printf ("Insira os parametros ou digite -q  para sair :\n");
+                    printf ("Insira os parametros ou digite -q  para continuar:\n");
                     fgets(input,maxCaracter-1,stdin);
                     if (sscanf(input, "-b%f", velocidadeDoBarco)) read++;
                     else if (sscanf(input, " -l%d ", larguraDoRio)) read++;
@@ -58,8 +62,8 @@ int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, i
                     else if (sscanf(argv[argc], "-lM%f", limiteMargens)) read++;
                     else if (strcmp(input,"-v\n") == 0) *verbose = 1;
                     else if (strcmp(input,"-q\n") == 0) return read;
+                    
                     else {
-                        
                         printf ("\t \t Opcoes disponiveis: \n"
                                 "-b  - Velocidade do barco\n"
                                 "-l  - Largura do Rio\n"
@@ -70,10 +74,10 @@ int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, i
                                 "-lM - Limite das margens\n"
                                 "-v  - Verbose\n");
                     }
-                    
                 }
             }
-            else
+            
+            else /* Se ele não quer passar mais parâmetros, assumimos que ele só queria saber quais parâmetros eram aceitos */
                 exit(-1);
         }
     }
@@ -81,6 +85,7 @@ int getArgs(int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, i
 }
 
 void corrigeArgs (int argc,char *argv[],float *velocidadeDoBarco, int *larguraDoRio, int *seed, int *fluxoDesejado, int *verbose, int *dIlha, float *pIlha, float *limiteMargens) {
+    /* Corrige os argumentos passados pelo usuário para atenderem os padrões necessários para o bom funcionamento do programa */
     
     if (*larguraDoRio < 12) {
         *larguraDoRio = 12;

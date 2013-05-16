@@ -28,7 +28,7 @@ void outputLine (pixel *linha, int largura) { /* Imprime a linha */
   int i = 0;
     
   for (i = 0; i < largura; i++){
-    printf( "%c " , /*velocidade(&linha[i])*/ tipo(&linha[i]));
+    printf( "%c" , /*velocidade(&linha[i])*/ tipo(&linha[i]));
   }
   printf("\n");
 }
