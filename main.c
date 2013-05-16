@@ -16,8 +16,6 @@
 #define probabilidadeDeObstaculosInicial 0.5
 #define limiteDasMargens 0.9
 
-#define limiteDasMargens 0.2
-
 int main (int argc, char *argv[]) {
     
     /*
@@ -44,7 +42,7 @@ int main (int argc, char *argv[]) {
      */
     
     getArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha, &limiteMargens);
-    /*corrigeArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha, &limiteMargens);*/
+    corrigeArgs(argc, argv, &velocidadeDoBarco, &larguraDoRio, &seed, &fluxoDesejado, &verbose, &dIlha, &pIlha, &limiteMargens);
 
     
     
@@ -61,7 +59,6 @@ int main (int argc, char *argv[]) {
                 "Pressione Enter para continuar...\n", velocidadeDoBarco, larguraDoRio, seed, fluxoDesejado, verbose, pIlha, dIlha, limiteMargens);
         getchar();
     }
-    limiteMargens = limiteDasMargens;
     
     /*
      Inicialização

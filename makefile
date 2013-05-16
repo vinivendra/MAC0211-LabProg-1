@@ -35,8 +35,5 @@ teste: teste.o rotinasTeste.o
 teste.o: teste.c
 	gcc -c teste.c $(objOptions)
 
-rotinasTeste.o: rotinasTeste.c
-	gcc -c rotinasTeste.c $(objOptions)
-
 clean:
 	rm -f *.o $(execName)
